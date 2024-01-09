@@ -1,20 +1,13 @@
 {
     "Debian" : "apt install",
-    "Ubuntu" : "apt install",
-
     "Arch" : "pacman -S",
-
     "Gentoo" : "emerge -S",
-
     "Fedora" : "dnf install",
-
     "openSUSE" : "zypper install",
-
     "FreeBSD" : "pkg install",
-
     "Alpine Linux" : "apk add",
-
     "NixOS" : "nix-env -i",
-
-    "Void Linux" : "xbps-install -S"
+    "Void Linux" : "xbps-install -S",
+    "Slackware" : "installpkg .tgz",
+    "CentOS" : "yum / dnf install"
 }
