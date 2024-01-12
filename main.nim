@@ -1,19 +1,20 @@
-import std/distros, std/times
+import std/strformat, osproc, os
 
-type
-  DebianBasedDistros = array[8, string]
-  ArchBasedDistros = array[7, string]
-  GentooBasedDistros = array[6, string]
-  CentOSBasedDistros = array[5, string]
-  FedoraBasedDistros = array[3, string]
-  openSUSEBasedDistros = array[3, string]
-  SlackwareBasedDistros = array[3, string]
-  
+let clearCmd : int = execCmd(fmt"clear")
+echo clearCmd
 
-let Debian: DebianBasedDistros = ["Debian", "Ubuntu", "Linux Mint", "elementary OS", "Pop!_OS", "Deepin", "Kali Linux", "MX Linux"]
-let Arch : ArchBasedDistros = ["Arch Linux", "Manjaro Linux", "EndeavourOS", "Artix Linux", "ArchBang Linux", "Arcolinux", "Garuda Linux"]
-let Gentoo : GentooBasedDistros = ["Gentoo", "Calculate Linux", "Funtoo Linux", "Sabayon Linux", "Gentoo Studio", "Redcore Linux"] 
-let CentOS : CentOSBasedDistros = ["CentOS", "Red Hat Enterprise Linux", "Oracle Linux", "Rocky Linux", "AlmaLinux"]
-let Fedora : FedoraBasedDistros = ["Fedora", "Redcore Linux", "Korora"]
-let openSUSE : openSUSEBasedDistros = ["openSUSE", "GeckoLinux", "Krypton Linux"]
-let Slackware : SlackwareBasedDistros = ["Slackware", "Zenwalk Linux", "Absolute Linux"]
+proc executeYaraRule(file, path : string) : void =
+    let yaraRuleFile : bool = fileExists(file)
+    let ansBool : int = execCmd(fmt"yara {file} {path}")
+
+    if ansBool == 1 : 
+        if yaraRuleFile == false : 
+            echo fmt"File {file} doesn't exist."
+            return 
+        else : 
+            echo fmt"Path {path} doesn't exist."
+            return 
+
+    echo ansBool;
+
+executeYaraRule("main.yara", "/home/z4que/Downloads")
