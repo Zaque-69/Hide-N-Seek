@@ -1,6 +1,17 @@
-import json, times
+import json, times, strutils, std/strformat
 
 let init : float =  cpuTime()
+
+
+proc pass() = return
+
+proc writeYara(filename: string, content: string) =
+  var 
+    file: File
+
+  if open(file, filename, fmWrite) :
+    write(file, content)
+    close(file)
 
 proc readFileContent(filename: string): string =
   var
@@ -12,20 +23,32 @@ proc readFileContent(filename: string): string =
   close(file)
   return content
 
-proc pass() = return
-
 proc main( extensionFile : string) : void =
+
+  var
+    yaraStructure : string
+
   let fileContent = readFileContent("extensions.json")
+  let jsonData = parseJson(fileContent)
+  let hexDecimals = jsonData[extensionFile].getStr()
 
-  if fileContent.len > 0:
-    try:
+  if len(hexDecimals) > 0 : echo hexDecimals
 
-      let jsonData = parseJson(fileContent)
+  else : 
+    for i in countup(1, 9) :
+      try :
+        let secondExtensionFile = extensionFile & intToStr(i)
+        #                       byte(nr)      {     previsious text from file     endline     hex decimals from json (all from an extension)      }
+        yaraStructure = "\n" & "byte" & intToStr(i) & " = {" & readFileContent("newww.txt") & jsonData[extensionFile][secondExtensionFile].getStr() & "}"
 
-      echo jsonData[extensionFile].getStr()
+        #writeYara("newww.txt", yaraStructure)
 
-    except : pass()
+        echo yaraStructure
+        yaraStructure = ""
 
-main("iso")
+
+      except : pass()
+      
+main("pem")
 
 echo cpuTime() - init
