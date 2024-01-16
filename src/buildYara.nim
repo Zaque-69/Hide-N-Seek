@@ -1,22 +1,31 @@
-import json
+import json, times
 
-proc readFile(filename: string): string =
+let init : float =  cpuTime()
+
+proc readFileContent(filename: string): string =
   var
     file: File
     content: string
-  content = readAll(file)
+
+  if open(file, filename) : content = readAll(file)
+
   close(file)
   return content
 
 proc pass() = return
 
-proc main( fileExtension : string) =
-  let fileContent = readFile("extensions.json")
+proc main( extensionFile : string) : void =
+  let fileContent = readFileContent("extensions.json")
 
   if fileContent.len > 0:
     try:
+
       let jsonData = parseJson(fileContent)
 
-      let extension = jsonData[fileExtension].getStr()
+      echo jsonData[extensionFile].getStr()
 
     except : pass()
+
+main("iso")
+
+echo cpuTime() - init
