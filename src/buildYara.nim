@@ -39,23 +39,29 @@ proc main( extensionFile : string) : void =
     for i in countup(0, 9) :
       try :
         let secondExtensionFile = extensionFile & intToStr(i)
-        yaraStructure = readFileContent("newww.txt") & jsonData[extensionFile][secondExtensionFile].getStr()
+        #               readFileContent("newww.txt") & 
+        yaraStructure =  jsonData[extensionFile][secondExtensionFile].getStr()
         list[i] = yaraStructure
         yaraStructure = ""
         
-
       except : pass()
 
-main("jpg")
+main("apk")
 
 proc buildYaraStructure(bytes : string, number : int) : void =
-  yaraContent = "rule" & intToStr(number) & " = { \n strings : \n"
+  yaraContent = "rule find" & intToStr(number) & " { \n strings : \n \n"
   for i in countup(0, 9): 
-    if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " = {" & list[i] & "} \n"
-  yaraContent &= "\n conditions : "
+    if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
+  yaraContent &= "\n condition : "
   for i in countup(0, 9): 
-    if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " & "
+    if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " and "
 
+  #deleting the last '$' from the contition
+  yaraContent = yaraContent[0..len(yaraContent) - 6]
+
+  yaraContent &= "\n }"
+
+  writeYara("yara/main.yara", yaraContent)
   echo yaraContent
 
 #
