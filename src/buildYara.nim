@@ -4,14 +4,16 @@ let init : float =  cpuTime()
 
 proc buildFile( extension : string ) =
 
+  #passing procedure, the equivalent of 'pass' in Python
   proc pass() = return
 
+  #declaration of variables used
   var
     yaraContent : string 
     yaraStructure : string
     list : array[10, string]
 
-
+  #creating or editing a .yara file
   proc writeYara(filename: string, content: string) =
     var 
       file: File
@@ -20,6 +22,9 @@ proc buildFile( extension : string ) =
       write(file, content)
       close(file)
 
+  #returning the text from a file, especially from the 'extensions.json' file, 
+  #which have the cost common file extensions used
+   
   proc readFileContent(filename: string): string =
     var
       file: File
@@ -52,6 +57,8 @@ proc buildFile( extension : string ) =
   main(extension)
 
   proc buildYaraStructure(bytes : string, number : int) : void =
+
+    #building a yara rule using the bytes from the extenion selected
     yaraContent = "rule find" & intToStr(number) & " { \n strings : \n \n"
     for i in countup(0, 9): 
       if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
@@ -64,8 +71,8 @@ proc buildFile( extension : string ) =
 
     yaraContent &= "\n }"
 
+    #creating a file with the unsing the 'extension' parameter from main proc
     writeYara(fmt"yara/find{extension}.yara", yaraContent)
-    #echo yaraContent
 
   for i in countup(0, 9 mod 2):
     if len(list[i]) > 0 : 
@@ -75,6 +82,5 @@ proc buildFile( extension : string ) =
 
 buildFile("jpg")
 #buildFile("exe")
-
 
 echo cpuTime() - init
