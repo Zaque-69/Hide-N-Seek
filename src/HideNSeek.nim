@@ -19,7 +19,7 @@ proc setCurrentDirectory( path : string ) : void =
 
 proc extensions( path : string ) = 
     let currentDir = getCurrentDir()
-    let runPy : int = execCmd(fmt"python python/main.py {path}")
+    let runPy : int = execCmd(fmt"python python/getExtensions.py {path}")
     let moveFile : int = execCmd(fmt"mv {path}aux.txt {currentDir}/Files")
 
 proc showCurrentDirrectoryFiles(path : string) : void = pass()
