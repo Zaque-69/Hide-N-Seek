@@ -2,71 +2,79 @@ import json, times, strutils, std/strformat
 
 let init : float =  cpuTime()
 
-proc pass() = return
-var
-  yaraContent : string 
-  yaraStructure : string
-  list : array[10, string]
+proc buildFile( extension : string ) =
 
+  proc pass() = return
 
-proc writeYara(filename: string, content: string) =
-  var 
-    file: File
-
-  if open(file, filename, fmWrite) :
-    write(file, content)
-    close(file)
-
-proc readFileContent(filename: string): string =
   var
-    file: File
-    content: string
+    yaraContent : string 
+    yaraStructure : string
+    list : array[10, string]
 
-  if open(file, filename) : content = readAll(file)
 
-  close(file)
-  return content
+  proc writeYara(filename: string, content: string) =
+    var 
+      file: File
 
-proc main( extensionFile : string) : void =
-    
-  let fileContent = readFileContent("extensions.json")
-  let jsonData = parseJson(fileContent)
-  let hexDecimals = jsonData[extensionFile].getStr()
+    if open(file, filename, fmWrite) :
+      write(file, content)
+      close(file)
 
-  if len(hexDecimals) > 0 : list[0] = hexDecimals
+  proc readFileContent(filename: string): string =
+    var
+      file: File
+      content: string
 
-  else : 
-    for i in countup(0, 9) :
-      try :
-        let secondExtensionFile = extensionFile & intToStr(i)
-        #               readFileContent("newww.txt") & 
-        yaraStructure =  jsonData[extensionFile][secondExtensionFile].getStr()
-        list[i] = yaraStructure
-        yaraStructure = ""
-        
-      except : pass()
+    if open(file, filename) : content = readAll(file)
 
-main("apk")
+    close(file)
+    return content
 
-proc buildYaraStructure(bytes : string, number : int) : void =
-  yaraContent = "rule find" & intToStr(number) & " { \n strings : \n \n"
-  for i in countup(0, 9): 
-    if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
-  yaraContent &= "\n condition : "
-  for i in countup(0, 9): 
-    if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " and "
+  proc main( extensionFile : string) : void =
+      
+    let fileContent = readFileContent("extensions.json")
+    let jsonData = parseJson(fileContent)
+    let hexDecimals = jsonData[extensionFile].getStr()
 
-  #deleting the last '$' from the contition
-  yaraContent = yaraContent[0..len(yaraContent) - 6]
+    if len(hexDecimals) > 0 : list[0] = hexDecimals
 
-  yaraContent &= "\n }"
+    else : 
+      for i in countup(0, 9) :
+        try :
+          let secondExtensionFile = extensionFile & intToStr(i)
+          #               readFileContent("newww.txt") & 
+          yaraStructure =  jsonData[extensionFile][secondExtensionFile].getStr()
+          list[i] = yaraStructure
+          yaraStructure = ""
+          
+        except : pass()
 
-  writeYara("yara/main.yara", yaraContent)
-  echo yaraContent
+  main(extension)
 
-#
-for i in countup(0, 9 mod 2):
-  if len(list[i]) > 0 : 
-    buildYaraStructure(list[0], i)
+  proc buildYaraStructure(bytes : string, number : int) : void =
+    yaraContent = "rule find" & intToStr(number) & " { \n strings : \n \n"
+    for i in countup(0, 9): 
+      if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
+    yaraContent &= "\n condition : "
+    for i in countup(0, 9): 
+      if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " and "
+
+    #deleting the last '$' from the contition
+    yaraContent = yaraContent[0..len(yaraContent) - 6]
+
+    yaraContent &= "\n }"
+
+    writeYara(fmt"yara/find{extension}.yara", yaraContent)
+    #echo yaraContent
+
+  for i in countup(0, 9 mod 2):
+    if len(list[i]) > 0 : 
+      buildYaraStructure(list[0], i)
+
+#////////////////////////////////////
+
+buildFile("jpg")
+#buildFile("exe")
+
 
 echo cpuTime() - init
