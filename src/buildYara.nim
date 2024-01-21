@@ -1,6 +1,9 @@
-import json, times, strutils, std/strformat
+import json, times, strutils, std/strformat, osproc
 
 let init : float =  cpuTime()
+
+#creating a 'Yara' foldes in case it doesn't exists
+let creatingFolderIfNoExists : int = execCmd("python python/createYaraFolder.py")
 
 proc buildFile( extension : string ) =
 
@@ -56,10 +59,10 @@ proc buildFile( extension : string ) =
 
   main(extension)
 
-  proc buildYaraStructure(bytes : string, number : int) : void =
+  proc buildYaraStructure(bytes : string) : void =
 
     #building a yara rule using the bytes from the extenion selected
-    yaraContent = "rule find" & intToStr(number) & " { \n strings : \n \n"
+    yaraContent = "rule find" & extension & " { \n strings : \n \n"
     for i in countup(0, 9): 
       if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
     yaraContent &= "\n condition : "
@@ -69,6 +72,8 @@ proc buildFile( extension : string ) =
     #deleting the last '$' from the contition
     yaraContent = yaraContent[0..len(yaraContent) - 6]
 
+    #after deleting the last '$', we add an endline and close the bracket 
+    #( &= is equal to += and is uised for strings )
     yaraContent &= "\n }"
 
     #creating a file with the unsing the 'extension' parameter from main proc
@@ -76,11 +81,12 @@ proc buildFile( extension : string ) =
 
   for i in countup(0, 9 mod 2):
     if len(list[i]) > 0 : 
-      buildYaraStructure(list[0], i)
+      buildYaraStructure(list[0])
 
 #////////////////////////////////////
 
 buildFile("jpg")
-#buildFile("exe")
+buildFile("exe")
+
 
 echo cpuTime() - init
