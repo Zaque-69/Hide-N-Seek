@@ -1,9 +1,24 @@
-import json, times, strutils, std/strformat, osproc
+import json, times, strutils, osproc
+import std/[os,strformat]
 
-let init : float =  cpuTime()
+let init : float = cpuTime()
 
 #creating a 'Yara' foldes in case it doesn't exists
 let creatingFolderIfNoExists : int = execCmd("python python/createYaraFolder.py")
+
+#creating a 'Yara' foldes in case it doesn't exists
+let getExtensionsFromAPAth : int = execCmd(fmt"python python/getExtensions.py {paramStr(1)}")
+
+#returning the text from a file
+proc readFileContent(filename: string): string =
+    var
+      file: File
+      content: string
+
+    if open(file, filename) : content = readAll(file)
+
+    close(file)
+    return content
 
 proc buildFile( extension : string ) =
 
@@ -27,16 +42,6 @@ proc buildFile( extension : string ) =
 
   #returning the text from a file, especially from the 'extensions.json' file, 
   #which have the cost common file extensions used
-   
-  proc readFileContent(filename: string): string =
-    var
-      file: File
-      content: string
-
-    if open(file, filename) : content = readAll(file)
-
-    close(file)
-    return content
 
   proc main( extensionFile : string) : void =
       
@@ -85,8 +90,7 @@ proc buildFile( extension : string ) =
 
 #////////////////////////////////////
 
-buildFile("jpg")
-buildFile("exe")
-
+#creating a file for each extension
+#for line in lines "largefile.txt": buildFile(line)
 
 echo cpuTime() - init
