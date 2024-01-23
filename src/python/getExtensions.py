@@ -1,13 +1,13 @@
 import os, sys, shutil
 home = os.getcwd()
 
-os.chdir("Files")
-moveExtensionsFile = os.getcwd()
+#keeping a variable for "Files" folder
+os.chdir("json")
+moveExtensionsJson = os.getcwd()
 
 #Deleting those file if already exists
 for file in os.listdir():
-    if file == "extensions.txt" or file == "howMany.json" : 
-        os.remove(file)
+    if file == "extensions.txt" or file == "howMany.json" : os.remove(file)
 
 os.chdir("..")
 os.chdir(str(sys.argv[1]))
@@ -38,7 +38,7 @@ with open('extensions.txt', 'a') as f :
         f.write(ext[count] + '\n')
         count += 1
 
-shutil.move("extensions.txt", moveExtensionsFile)
+shutil.move("extensions.txt", moveExtensionsJson)
 
 #after moving the extension file, we are counting many files 
 #from each extension are in the current directory
@@ -46,7 +46,7 @@ shutil.move("extensions.txt", moveExtensionsFile)
 param, listOFElements = 0, []
 for i in range (0, len(ext)):
     for file in os.listdir():
-        if ext[i] in file : param += 1
+        if ext[i] in file and "." in str(file) : param += 1
     listOFElements.append(param)
     param = 0
 
@@ -57,4 +57,4 @@ with open("howMany.json", "a") as f:
         if i + 1 < len(ext) : f.write(", \n")
     f.write("\n }")
 
-shutil.move("howMany.json", moveExtensionsFile)
+shutil.move("howMany.json", moveExtensionsJson)
