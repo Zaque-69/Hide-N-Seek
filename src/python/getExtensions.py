@@ -24,6 +24,10 @@ for i in os.listdir() :
 
 count = 0
 
+#deleting directories from list
+for file in ext:
+    if not "." in file : ext.remove(file)
+
 for i in ext :
     if not "." in ext[count] : del ext[count]
     else : 
@@ -46,7 +50,7 @@ shutil.move("extensions.txt", moveExtensionsJson)
 param, listOFElements = 0, []
 for i in range (0, len(ext)):
     for file in os.listdir():
-        if ext[i] in file and "." in str(file) : param += 1
+        if ext[i] in file: param += 1
     listOFElements.append(param)
     param = 0
 
