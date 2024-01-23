@@ -1,7 +1,25 @@
+#[
+  What this code do?
+  This Nim program creates a Yara rule for each file by its extension.
+  So, it can checks if the extension corespond with the signature
+  of the file. This can by used to check if a downloaded file have its
+  extension changed. SO it can be used as malware, fooling you.
+
+  list of signatures : https://en.wikipedia.org/wiki/List_of_file_signatures
+
+  Z4que 2024 - All rights reserved
+]#
+
 import json, times, strutils, osproc
 import std/[os,strformat]
 
+#declaration of variables used
 let init : float = cpuTime()
+var
+    yaraContent : string 
+    yaraStructure : string
+    list : array[10, string]
+    countFileElements : int
 
 #creating a 'Yara' foldes in case it doesn't exists
 let creatingFolderIfNoExists : int = execCmd("python python/createYaraFolder.py")
@@ -24,12 +42,6 @@ proc buildFile( extension : string ) =
 
   #passing procedure, the equivalent of 'pass' in Python
   proc pass() = return
-
-  #declaration of variables used
-  var
-    yaraContent : string 
-    yaraStructure : string
-    list : array[10, string]
 
   #creating or editing a .yara file
   proc writeYara(filename: string, content: string) =
@@ -90,7 +102,9 @@ proc buildFile( extension : string ) =
 
 #////////////////////////////////////
 
-#creating a file for each extension
-#for line in lines "largefile.txt": buildFile(line)
+#reading each line from "extentions.txt" file and create a Yara role for each
+for line in lines "json/extensions.txt" : 
+  try : buildFile(fmt"{line}")
+  except : discard
 
-echo cpuTime() - init
+echo "Execution time : ", cpuTime() - init
