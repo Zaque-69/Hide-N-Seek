@@ -13,19 +13,27 @@
 import json, times, strutils, osproc
 import std/[os,strformat]
 
+#importing local files
+import filelist
+
 #declaration of variables used
 let init : float = cpuTime()
 var
-    yaraContent : string 
-    yaraStructure : string
-    list : array[10, string]
-    countFileElements : int
+  yaraContent : string 
+  yaraStructure : string
+  list : array[10, string]
+  filesFromDir : seq[string] = fileList(paramStr(1))
+
+
+#run shell Command
+proc runShellCommand(command: string): void =
+  let result = execCmd(command)
 
 #creating a 'Yara' foldes in case it doesn't exists
-let creatingFolderIfNoExists : int = execCmd("python python/createYaraFolder.py")
+runShellCommand("python python/createYaraFolder.py")
 
 #creating a 'Yara' foldes in case it doesn't exists
-let getExtensionsFromAPAth : int = execCmd(fmt"python python/getExtensions.py {paramStr(1)}")
+runShellCommand(fmt"python python/getExtensions.py {paramStr(1)}")
 
 #returning the text from a file
 proc readFileContent(filename: string): string =
@@ -33,15 +41,14 @@ proc readFileContent(filename: string): string =
       file: File
       content: string
 
-    if open(file, filename) : content = readAll(file)
+    if open(file, filename) : 
+      content = readAll(file)
 
     close(file)
     return content
 
+#main function
 proc buildFile( extension : string ) =
-
-  #passing procedure, the equivalent of 'pass' in Python
-  proc pass() = return
 
   #creating or editing a .yara file
   proc writeYara(filename: string, content: string) =
@@ -57,7 +64,7 @@ proc buildFile( extension : string ) =
 
   proc main( extensionFile : string) : void =
       
-    let fileContent = readFileContent("extensions.json")
+    let fileContent = readFileContent("json/extensions.json")
     let jsonData = parseJson(fileContent)
     let hexDecimals = jsonData[extensionFile].getStr()
 
@@ -72,7 +79,7 @@ proc buildFile( extension : string ) =
           list[i] = yaraStructure
           yaraStructure = ""
           
-        except : pass()
+        except : discard
 
   main(extension)
 
@@ -82,12 +89,10 @@ proc buildFile( extension : string ) =
     yaraContent = "rule find" & extension & " { \n strings : \n \n"
     for i in countup(0, 9): 
       if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
-    yaraContent &= "\n condition : "
-    for i in countup(0, 9): 
-      if len(list[i]) > 0 : yaraContent &= "$byte" & intToStr(i) & " and "
-
+    yaraContent &= "\n condition : any of them"
+    
     #deleting the last '$' from the contition
-    yaraContent = yaraContent[0..len(yaraContent) - 6]
+    yaraContent = yaraContent[0..len(yaraContent) - 1]
 
     #after deleting the last '$', we add an endline and close the bracket 
     #( &= is equal to += and is uised for strings )
@@ -107,4 +112,27 @@ for line in lines "json/extensions.txt" :
   try : buildFile(fmt"{line}")
   except : discard
 
+#list of yara rules
+var
+  yaraRules : seq[string] = fileList("yara")
+  extensionsInPath : seq[string]
+  path : string = paramStr(1)
+
+for line in lines "json/extensions.txt" : add(extensionsInPath, line)
+
+#if the path argument is not finishing with "/" we will add one
+if path[len(path) - 1] == '/' : path &= "/" 
+
+for k in extensionsInPath:
+  for i in filesFromDir:
+    for j in yaraRules : 
+      if len(j) > 0 and contains(i, k) and contains(j, k) : 
+        runShellCommand(fmt"yara yara/{j} {path}{i} > example.txt")
+        if len(readFileContent("example.txt")) == 0 : 
+          echo fmt"{path}{i} has extension changed!"
+      runShellCommand(" > example.txt ")
+
 echo "Execution time : ", cpuTime() - init
+
+#clear && nim c -r buildYara.nim /home/z4que/workspace/hidenseek/src/
+# yara rules and extensions
