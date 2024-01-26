@@ -11,7 +11,7 @@
 ]#
 
 import json, times, strutils, osproc
-import std/[os,strformat]
+import std/[os,strformat, terminal]
 
 #importing local files
 import filelist
@@ -24,13 +24,16 @@ var
   list : array[10, string]
   filesFromDir : seq[string] = fileList(paramStr(1))
 
-
 #run shell Command
 proc runShellCommand(command: string): void =
   let result = execCmd(command)
 
 #creating a 'Yara' foldes in case it doesn't exists
-runShellCommand("python python/createYaraFolder.py")
+try : runShellCommand("rm -r yara")
+except : discard
+
+#creating a 'Yara' foldes in case it doesn't exists
+runShellCommand("mkdir yara")
 
 #creating a 'Yara' foldes in case it doesn't exists
 runShellCommand(fmt"python python/getExtensions.py {paramStr(1)}")
@@ -129,7 +132,8 @@ for k in extensionsInPath:
       if len(j) > 0 and contains(i, k) and contains(j, k) : 
         runShellCommand(fmt"yara yara/{j} {path}{i} > example.txt")
         if len(readFileContent("example.txt")) == 0 : 
-          echo fmt"{path}{i} has extension changed!"
+
+          stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] {path}{i} has extension changed!")
       runShellCommand(" > example.txt ")
 
 echo "Execution time : ", cpuTime() - init
