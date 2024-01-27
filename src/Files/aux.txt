@@ -1,8 +1,0 @@
-plasma
-md
-wallpaper
-.sh
-git
-sh
-sddm
-png
