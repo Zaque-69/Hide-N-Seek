@@ -124,7 +124,7 @@ var
 for line in lines "json/extensions.txt" : add(extensionsInPath, line)
 
 #if the path argument is not finishing with "/" we will add one
-if path[len(path) - 1] == '/' : path &= "/" 
+if path[len(path) - 1] != '/' : path &= "/" 
 
 for k in extensionsInPath:
   for i in filesFromDir:
