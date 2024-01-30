@@ -22,7 +22,7 @@ The above command checks if in the respective location there is a file with an e
 
 The above command checks if the directory or the file contains malware bytes, thanks to YARA personal rules. ( Checks for : Ransomware / Cryptography, BTC miner virus, etc. )
 
-# Imports
+# Local imports - listdir in Nim!
 
 ```nim
 import filelist
@@ -59,6 +59,9 @@ proc fileList*( path : string ) : seq[string] =
 
     return rows
 ```
+
+The above file is the equivalent of Python 'os.listdir()' by returnuing the files from a directory in a sequence with the help of the following C code : 
+
 # C code
 ```C
 #include <stdio.h>
