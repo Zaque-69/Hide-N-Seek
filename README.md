@@ -3,7 +3,7 @@
 </p>
 
 # Hide 'N Seek
-Basically, "Hide 'N Seek" it's a program written in based on Nim language, which is a file manager and malware detector. For example, we can use "Hide 'N Seek" to sort the fiels from a directory in folders by their extensions or to see information about files and cheks if the files are malitious or not, thanks to personal Yara rules.
+Basically, "Hide 'N Seek" it's a program based on Nim language, which is a file manager and malware detector. For example, we can use "Hide 'N Seek" to sort the fiels from a directory in folders by their extensions or to see information about files and cheks if the files are malitious or not, thanks to personal Yara rules.
 
 
 # Examples
