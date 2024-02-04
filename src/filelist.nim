@@ -8,6 +8,7 @@
 ]#
 
 import osproc, strformat
+from runCommand import runShellCommand
 
 var count : int
 
@@ -20,7 +21,7 @@ proc countRows(filename : string) : int =
 
 proc fileList*( path : string ) : seq[string] =
     #witing the files from a path using C
-    let runCommand : int = execCmd(fmt"clear && gcc main.c -o main && ./main {path}")
+    runShellCommand(fmt"cd c && touch output.txt && ./main {path} && mv output.txt .. && cd ..")
 
     #counting rows
     var rows : seq[string] = createArray(countRows("output.txt"))
@@ -31,10 +32,6 @@ proc fileList*( path : string ) : seq[string] =
         rows[count] = line
         count += 1
 
-    #deleting the first 2 rows that contain only dots
-    delete(rows, 1)
-    delete(rows, 0)
-
-    let deleteTxt : int = execCmd("rm output.txt")
+    runShellCommand("rm output.txt")
 
     return rows
