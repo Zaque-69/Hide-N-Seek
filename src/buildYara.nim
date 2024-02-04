@@ -10,23 +10,20 @@
   Z4que 2024 - All rights reserved
 ]#
 
-import json, times, strutils, osproc
+import json, strutils
 import std/[os,strformat, terminal]
 
 #importing local files
-import filelist
+from filelist import fileList
+from runCommand import runShellCommand
 
 #declaration of variables used
-let init : float = cpuTime()
+
 var
   yaraContent : string 
   yaraStructure : string
   list : array[10, string]
   filesFromDir : seq[string] = fileList(paramStr(1))
-
-#run shell Command
-proc runShellCommand(command: string): void =
-  let result = execCmd(command)
 
 #creating a 'Yara' foldes in case it doesn't exists
 try : runShellCommand("rm -r yara")
@@ -63,7 +60,7 @@ proc buildFile( extension : string ) =
       close(file)
 
   #returning the text from a file, especially from the 'extensions.json' file, 
-  #which have the cost common file extensions used
+  #which have the cost comm
 
   proc main( extensionFile : string) : void =
       
@@ -98,7 +95,6 @@ proc buildFile( extension : string ) =
     yaraContent = yaraContent[0..len(yaraContent) - 1]
 
     #after deleting the last '$', we add an endline and close the bracket 
-    #( &= is equal to += and is uised for strings )
     yaraContent &= "\n }"
 
     #creating a file with the unsing the 'extension' parameter from main proc
@@ -107,8 +103,6 @@ proc buildFile( extension : string ) =
   for i in countup(0, 9 mod 2):
     if len(list[i]) > 0 : 
       buildYaraStructure(list[0])
-
-#////////////////////////////////////
 
 #reading each line from "extentions.txt" file and create a Yara role for each
 for line in lines "json/extensions.txt" : 
@@ -130,13 +124,14 @@ for k in extensionsInPath:
   for i in filesFromDir:
     for j in yaraRules : 
       if len(j) > 0 and contains(i, k) and contains(j, k) : 
-        runShellCommand(fmt"yara yara/{j} {path}{i} > example.txt")
-        if len(readFileContent("example.txt")) == 0 : 
+        
+        runShellCommand(fmt"yara yara/{j} {path}{i} > auxiliary.txt")
 
-          stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] {path}{i} has extension changed!")
-      runShellCommand(" > example.txt ")
+        if len(readFileContent("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
+        else : stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {path}{i} has passed the test!")
 
-echo "Execution time : ", cpuTime() - init
+      runShellCommand(" > auxiliary.txt ")
+
 
 #clear && nim c -r buildYara.nim /home/z4que/workspace/hidenseek/src/
 # yara rules and extensions
