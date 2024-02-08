@@ -35,36 +35,15 @@ runShellCommand("mkdir yara")
 #creating a 'Yara' foldes in case it doesn't exists
 runShellCommand(fmt"python python/getExtensions.py {paramStr(1)}")
 
-#returning the text from a file
-proc readFileContent(filename: string): string =
-    var
-      file: File
-      content: string
-
-    if open(file, filename) : 
-      content = readAll(file)
-
-    close(file)
-    return content
-
 #main function
 proc buildFile( extension : string ) =
-
-  #creating or editing a .yara file
-  proc writeYara(filename: string, content: string) =
-    var 
-      file: File
-
-    if open(file, filename, fmWrite) :
-      write(file, content)
-      close(file)
 
   #returning the text from a file, especially from the 'extensions.json' file, 
   #which have the cost comm
 
   proc main( extensionFile : string) : void =
       
-    let fileContent = readFileContent("json/extensions.json")
+    let fileContent = readFile("json/extensions.json")
     let jsonData = parseJson(fileContent)
     let hexDecimals = jsonData[extensionFile].getStr()
 
@@ -74,7 +53,7 @@ proc buildFile( extension : string ) =
       for i in countup(0, 9) :
         try :
           let secondExtensionFile = extensionFile & intToStr(i)
-          #               readFileContent("newww.txt") & 
+          #               readFile("newww.txt") & 
           yaraStructure =  jsonData[extensionFile][secondExtensionFile].getStr()
           list[i] = yaraStructure
           yaraStructure = ""
@@ -98,7 +77,7 @@ proc buildFile( extension : string ) =
     yaraContent &= "\n }"
 
     #creating a file with the unsing the 'extension' parameter from main proc
-    writeYara(fmt"yara/find{extension}.yara", yaraContent)
+    writeFile(fmt"yara/find{extension}.yara", yaraContent)
 
   for i in countup(0, 9 mod 2):
     if len(list[i]) > 0 : 
@@ -127,7 +106,7 @@ for k in extensionsInPath:
         
         runShellCommand(fmt"yara yara/{j} {path}{i} > auxiliary.txt")
 
-        if len(readFileContent("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
+        if len(readFile("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
         else : stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {path}{i} has passed the test!")
 
       runShellCommand(" > auxiliary.txt ")
