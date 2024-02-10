@@ -33,34 +33,32 @@ except : discard
 runShellCommand("mkdir yara")
 
 #creating a 'Yara' foldes in case it doesn't exists
-runShellCommand(fmt"python python/getExtensions.py {paramStr(1)}")
+runShellCommand(fmt"python3 python/getExtensions.py {paramStr(1)}")
+
+#returning the text from a file
 
 #main function
 proc buildFile( extension : string ) =
 
   #returning the text from a file, especially from the 'extensions.json' file, 
   #which have the cost comm
-
-  proc main( extensionFile : string) : void =
       
-    let fileContent = readFile("json/extensions.json")
-    let jsonData = parseJson(fileContent)
-    let hexDecimals = jsonData[extensionFile].getStr()
+  let fileContent = readFile("json/extensions.json")
+  let jsonData = parseJson(fileContent)
+  let hexDecimals = jsonData[extension].getStr()
 
-    if len(hexDecimals) > 0 : list[0] = hexDecimals
+  if len(hexDecimals) > 0 : list[0] = hexDecimals
 
-    else : 
-      for i in countup(0, 9) :
-        try :
-          let secondExtensionFile = extensionFile & intToStr(i)
-          #               readFile("newww.txt") & 
-          yaraStructure =  jsonData[extensionFile][secondExtensionFile].getStr()
-          list[i] = yaraStructure
-          yaraStructure = ""
+  else : 
+    for i in countup(0, 9) :
+      try :
+        let secondExtensionFile = extension & intToStr(i)
+        #               readFile("newww.txt") & 
+        yaraStructure =  jsonData[extension][secondExtensionFile].getStr()
+        list[i] = yaraStructure
+        yaraStructure = ""
           
-        except : discard
-
-  main(extension)
+      except : discard
 
   proc buildYaraStructure(bytes : string) : void =
 
@@ -88,13 +86,15 @@ for line in lines "json/extensions.txt" :
   try : buildFile(fmt"{line}")
   except : discard
 
+echo "DIR : ", getCurrentDir()
+
 #list of yara rules
 var
   yaraRules : seq[string] = fileList("yara")
   extensionsInPath : seq[string]
   path : string = paramStr(1)
 
-for line in lines "json/extensions.txt" : add(extensionsInPath, line)
+for line in lines "json/extensions.txt" : extensionsInPath.add(line)
 
 #if the path argument is not finishing with "/" we will add one
 if path[len(path) - 1] != '/' : path &= "/" 
@@ -102,12 +102,13 @@ if path[len(path) - 1] != '/' : path &= "/"
 for k in extensionsInPath:
   for i in filesFromDir:
     for j in yaraRules : 
-      if len(j) > 0 and contains(i, k) and contains(j, k) : 
-        
-        runShellCommand(fmt"yara yara/{j} {path}{i} > auxiliary.txt")
+      if len(j) > 0 and contains(i, k) and contains(j, k) :
+        #echo fmt"yara yara/{j} {path}{i}"        
+        #runShellCommand(fmt"yara yara/{j} {path}{i} > auxiliary.txt")
+        echo readFile("auxiliary.txt")
 
-        if len(readFile("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
-        else : stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {path}{i} has passed the test!")
+        #if len(readFile("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
+        #else : stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {path}{i} has passed the test!")
 
       runShellCommand(" > auxiliary.txt ")
 
