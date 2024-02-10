@@ -7,31 +7,31 @@
     Z4que 2024 - All rights reserved
 ]#
 
-import osproc, strformat
+import osproc, strformat, strutils
 from runCommand import runShellCommand
-
-var count : int
 
 proc createArray(size: int): seq[string] =
   return newSeq[string](size)
 
 proc countRows(filename : string) : int = 
+    var count : int = 0
     for line in lines filename : count += 1
-    return count 
+    return count + 1
 
 proc fileList*( path : string ) : seq[string] =
+    var 
+      content : string   
+      count : int = 0
+  
     #witing the files from a path using C
-    runShellCommand(fmt"cd c && touch output.txt && ./main {path} && mv output.txt .. && cd ..")
+    runShellCommand(fmt"cd c && touch output.txt && gcc filelist.c -o main && ./main {path} && mv output.txt .. && cd ..")
 
-    #counting rows
-    var rows : seq[string] = createArray(countRows("output.txt"))
+    var rows = createArray(countRows("output.txt"))
 
-    count = 0
+    for line in lines "output.txt" :   
+      rows[count] = line
+      count += 1
 
-    for line in lines "output.txt" : 
-        rows[count] = line
-        count += 1
-
-    runShellCommand("rm output.txt")
-
+     
+    #runShellCommand("rm output.txt")
     return rows
