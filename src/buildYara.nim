@@ -10,11 +10,10 @@
   Z4que 2024 - All rights reserved
 ]#
 
-import json, strutils
+import json, strutils, os
 import std/[os,strformat, terminal]
 
 #importing local files
-from filelist import fileList
 from runCommand import runShellCommand
 
 #declaration of variables used
@@ -23,25 +22,21 @@ var
   yaraContent : string 
   yaraStructure : string
   list : array[10, string]
-  filesFromDir : seq[string] = fileList(paramStr(1))
+  filesFromDir : seq[string]
+  yaraRules : seq[string]
+  argPath : string = paramStr(1)
+
+for file in walkDir(paramStr(1)) : 
+  filesFromDir.add(file.path)
+
+for file in walkDir("yara"): 
+   yaraRules.add(file.path)
 
 #creating a 'Yara' foldes in case it doesn't exists
-try : runShellCommand("rm -r yara")
-except : discard
+runShellCommand("rm -rf yara && mkdir yara")
+runShellCommand(fmt"nim c -r extensions.nim {paramStr(1)}")
 
-#creating a 'Yara' foldes in case it doesn't exists
-runShellCommand("mkdir yara")
-
-#creating a 'Yara' foldes in case it doesn't exists
-runShellCommand(fmt"python3 python/getExtensions.py {paramStr(1)}")
-
-#returning the text from a file
-
-#main function
 proc buildFile( extension : string ) =
-
-  #returning the text from a file, especially from the 'extensions.json' file, 
-  #which have the cost comm
       
   let fileContent = readFile("json/extensions.json")
   let jsonData = parseJson(fileContent)
@@ -53,7 +48,6 @@ proc buildFile( extension : string ) =
     for i in countup(0, 9) :
       try :
         let secondExtensionFile = extension & intToStr(i)
-        #               readFile("newww.txt") & 
         yaraStructure =  jsonData[extension][secondExtensionFile].getStr()
         list[i] = yaraStructure
         yaraStructure = ""
@@ -65,13 +59,11 @@ proc buildFile( extension : string ) =
     #building a yara rule using the bytes from the extenion selected
     yaraContent = "rule find" & extension & " { \n strings : \n \n"
     for i in countup(0, 9): 
-      if len(list[i]) > 0 : yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
-    yaraContent &= "\n condition : any of them"
-    
-    #deleting the last '$' from the contition
-    yaraContent = yaraContent[0..len(yaraContent) - 1]
+      if len(list[i]) > 0 : 
+        yaraContent &= "    $byte" & intToStr(i) & " = {" & list[i] & "} \n"
 
-    #after deleting the last '$', we add an endline and close the bracket 
+    yaraContent &= "\n condition : any of them"
+    yaraContent = yaraContent[0..len(yaraContent) - 1] 
     yaraContent &= "\n }"
 
     #creating a file with the unsing the 'extension' parameter from main proc
@@ -83,35 +75,39 @@ proc buildFile( extension : string ) =
 
 #reading each line from "extentions.txt" file and create a Yara role for each
 for line in lines "json/extensions.txt" : 
-  try : buildFile(fmt"{line}")
-  except : discard
+  try : 
+    buildFile(fmt"{line}")
+  except : 
+    discard
 
-echo "DIR : ", getCurrentDir()
-
-#list of yara rules
 var
-  yaraRules : seq[string] = fileList("yara")
   extensionsInPath : seq[string]
-  path : string = paramStr(1)
+  finalTrue : seq[string]
+  finalFalse : seq[string]
 
-for line in lines "json/extensions.txt" : extensionsInPath.add(line)
+for line in lines "json/extensions.txt" : 
+  extensionsInPath.add(line)
 
 #if the path argument is not finishing with "/" we will add one
-if path[len(path) - 1] != '/' : path &= "/" 
+if argPath[len(argPath) - 1] != '/' : argPath &= "/" 
 
+#printing the infected files
 for k in extensionsInPath:
   for i in filesFromDir:
+
     for j in yaraRules : 
       if len(j) > 0 and contains(i, k) and contains(j, k) :
-        #echo fmt"yara yara/{j} {path}{i}"        
-        #runShellCommand(fmt"yara yara/{j} {path}{i} > auxiliary.txt")
-        echo readFile("auxiliary.txt")
+        finalTrue.add(i)
+        runShellCommand(fmt"clear && yara {j} {i}")
+        stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {i} has extension changed!")
+      #else : 
+      #  stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {i} has passed the test!")
+  
+#printing the regular files
+for i in countup(0, len(filesFromDir) - 1) :
+  for j in countup(0, len(finalTrue) - 1) :
+    if filesFromDir[i] != finalTrue[j] :
+      stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {filesFromDir[i]} has passed the test!")
+      break
 
-        #if len(readFile("auxiliary.txt")) == 0 : stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {path}{i} has extension changed!")
-        #else : stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {path}{i} has passed the test!")
-
-      runShellCommand(" > auxiliary.txt ")
-
-
-#clear && nim c -r buildYara.nim /home/z4que/workspace/hidenseek/src/
-# yara rules and extensions
+# j i
