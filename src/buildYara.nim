@@ -99,9 +99,7 @@ for k in extensionsInPath:
       if len(j) > 0 and contains(i, k) and contains(j, k) :
         finalTrue.add(i)
         runShellCommand(fmt"clear && yara {j} {i}")
-        stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {i} has extension changed!")
-      #else : 
-      #  stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {i} has passed the test!")
+        stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {i} has extension changed!") 
   
 #printing the regular files
 for i in countup(0, len(filesFromDir) - 1) :
