@@ -7,20 +7,6 @@ var
 for i in walkDir(path): 
   files.add(i.path)
 
-
-[z4que@nixos:~/Desktop]$ ls
-Hyprshot  japan.jpg  new  new.nim
-
-[z4que@nixos:~/Desktop]$ cat new.nim
-import asyncdispatch, os
-
-var
-  path : string = paramStr(1)
-  files : seq[string]
-
-for i in walkDir(path): 
-  files.add(i.path)
-
 func deleteByName( lst : seq[string], name : string ) : seq[string] = 
   var lst2 : seq[string]
   for i in countup(0, len(lst) - 1) :
