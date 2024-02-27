@@ -1,5 +1,4 @@
 from runCommand import runShellCommand
-from filelist import fileList
 import std/[os, terminal, strformat], times, strutils
 
 let t : float = cpuTime()
@@ -7,7 +6,11 @@ let t : float = cpuTime()
 var
     file: File
     content: string
-    yaraRules : seq[string] = @["ransomware.yara", "miner.yara", "others.yara"]
+    yaraRules : seq[string] = @[]
+
+#adding the YARA rules from the 'malware' foler in a sequence
+for file in walkDir("malware") : 
+  add(yaraRules, file.path)
 
 proc deleteLineFromString(inputStr: string, lineNum: int): string =
     var lines = inputStr.splitLines()
@@ -17,21 +20,23 @@ proc deleteLineFromString(inputStr: string, lineNum: int): string =
     
     return lines.join("\n")
 
-runShellCommand("clear && touch c/process.txt && c/process && mv c/process.txt . && sudo su")
-for i in yaraRules:
-  for line in lines "process.txt" : 
-    try :
+#adding the running processes in a file and the we will scan them
+runShellCommand(" > File/process.txt && ps -ef --no-headers | awk '{print $8}' > File/process.txt ")
 
-      if contains(readFile("aux.txt"), "error") :
-        discard
+for line in lines "File/process.txt" :
+  for i in yaraRules :
+    if not contains(line, '[') and not contains(line, '(') and contains(line, '/') :
+      runShellCommand(fmt"yara {i} {line} > File/outputProcess.txt")
 
-      elif len(readFile("aux.txt")) == 0 :
+      if len(readFile("File/outputProcess.txt")) == 0 : 
         stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {line} has passed the test!", readFile("yaraLines.txt"))
+    
       else :
-
         stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {line} may be malitious! Reason : ", deleteLineFromString(readFile("yaraLines.txt"), 1))
-        
-    except:
-      discard
 
+for line in lines "File/process.txt" : 
+  #we select only files that runs in background and not contains '[ ]' or '( )' -> kernel processes
+  if not contains(line, '/') and not contains(line, '[') and not contains(line, '('):
+    runShellCommand(fmt"echo '{line}' >> File/process2.txt")
+  
 echo "\nExecution time : ", cpuTime() - t
