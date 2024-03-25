@@ -1,11 +1,17 @@
 import asyncdispatch, os
+import std/[strformat, strutils]
+from runCommand import echoStatusFile, runShellCommand
 
 var
   path : string = paramStr(1)
   files : seq[string]
+  yaraRules : seq[string]
 
-for i in walkDir(path): 
+for i in walkDir(path) : 
   files.add(i.path)
+
+for i in walkDir("malware") : 
+  yaraRules.add(i.path)
 
 func deleteByName( lst : seq[string], name : string ) : seq[string] = 
   var lst2 : seq[string]
@@ -16,14 +22,8 @@ func deleteByName( lst : seq[string], name : string ) : seq[string] =
 
 func seqDifference(lst1, lst2 : seq[string]) : seq[string] = 
   var 
-    i, j : int
     l1 = lst1
     l2 = lst2
-
-  if len(l1) > len(l2) : 
-    var aux = l1
-    l1 = l2
-    l2 = aux
 
   var finalSeq : seq[string] = l2
 
@@ -33,22 +33,46 @@ func seqDifference(lst1, lst2 : seq[string]) : seq[string] =
   
   result = finalSeq
 
+proc first_words(filename: string) : seq[string] =
+  var list : seq[string] = @[]
+  for line in filename.lines:
+    add(list, line.split(' ')[0])
+
+  return list
+
+
 proc listen( location : string ) : Future[void] {.async.} = 
   var 
-    files2 : seq[string]
-  
+    files2 : seq[string] 
+    
   while true : 
     await sleepAsync(10)
     for file in walkDir(location) :
       files2.add(file.path)
+    
 
     if len(seqDifference(files, files2)) > 0 : 
-      echo seqDifference(files, files2)
+
+      var fin = seqDifference(files, files2)
+
+      for i in fin : 
+        for j in yaraRules :
+
+          runShellCommand(fmt" > File/positive_rule.txt && yara {j} {i} > File/positive_rule.txt ")
+          
+          if ( len(readfile("File/positive_rule.txt")) > 0 ) : 
+            var rules : seq[string] = first_words("File/positive_rule.txt")
+            echoStatusFile(i, rules.join(", "), false)
+
+          else : 
+            echoStatusFile(i, j, true)
+
       break
 
     setLen(files2, 0)
 
 proc main() {.async.} = 
+  runShellCommand("clear")
   await listen(path)
 
 waitFor main()
