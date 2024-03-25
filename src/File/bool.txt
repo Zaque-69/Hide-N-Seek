@@ -1,1 +1,0 @@
-findjpg /home/z4que/Desktop/japan.jpg
