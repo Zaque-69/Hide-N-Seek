@@ -1,6 +1,4 @@
-# os -> 'walkDir()', strutils -> paramStr(1)      
-import os, strutils, sequtils
-#import std/[os]
+import os
 
 proc remDub( list : seq[string] ) : seq[string] =
   var
@@ -18,14 +16,13 @@ proc remDub( list : seq[string] ) : seq[string] =
 
   return finalList
 
-
-
 var
   files : seq[string]
   finalFiles : seq[string]
   extension : string 
-  aux : string = ""
   boolrean : bool = false
+
+writeFile("File/extensions.txt", "")
 
 for file in walkDir(paramStr(1)) :
   files.add(file.path)
@@ -52,4 +49,4 @@ for file in files :
 finalFiles = remDub(finalFiles)
 
 for ext in finalFiles :
-  writeFile("Files/extensions.txt", readFile("Files/extensions.txt") & ext & '\n')
+  writeFile("File/extensions.txt", readFile("File/extensions.txt") & ext & '\n')
