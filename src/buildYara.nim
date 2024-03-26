@@ -11,14 +11,10 @@
 ]#
 
 import json, strutils, os
-import std/[os,strformat, terminal]
-
-#importing local files
+import std/[strformat, terminal]
 from runCommand import runShellCommand
 
-#declaration of variables used
-
-var
+var 
   yaraContent : string 
   yaraStructure : string
   list : array[10, string]
@@ -74,7 +70,7 @@ proc buildFile( extension : string ) =
       buildYaraStructure(list[0])
 
 #reading each line from "extentions.txt" file and create a Yara role for each
-for line in lines "json/extensions.txt" : 
+for line in lines "File/extensions.txt" : 
   try : 
     buildFile(fmt"{line}")
   except : 
@@ -83,18 +79,15 @@ for line in lines "json/extensions.txt" :
 var
   extensionsInPath : seq[string]
   finalTrue : seq[string]
-  finalFalse : seq[string]
 
-for line in lines "json/extensions.txt" : 
+for line in lines "File/extensions.txt" : 
   extensionsInPath.add(line)
 
 #if the path argument is not finishing with "/" we will add one
 if argPath[len(argPath) - 1] != '/' : argPath &= "/" 
 
-#printing the infected files
 for k in extensionsInPath:
   for i in filesFromDir:
-
     for j in yaraRules : 
       if len(j) > 0 and contains(i, k) and contains(j, k) :
         finalTrue.add(i)
@@ -107,5 +100,3 @@ for i in countup(0, len(filesFromDir) - 1) :
     if filesFromDir[i] != finalTrue[j] :
       stdout.styledWriteLine(fgGreen, styleBright, fmt"[0K!] File : {filesFromDir[i]} has passed the test!")
       break
-
-# j i
