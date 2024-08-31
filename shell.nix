@@ -3,7 +3,7 @@
 pkgs.mkShell{
   nativeBuildInputs = with pkgs; [
     yara
-    nim2
+    nim
   ];
 
   shellHook = ''

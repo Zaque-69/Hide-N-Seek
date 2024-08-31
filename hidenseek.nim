@@ -1,22 +1,23 @@
-import osproc, strformat, times
+import strformat, times
 import std/[os]
 
-from src/runCommand import runShellCommand
+from src/runCommand import runShellCommand, compile_all
 
 let t : float = cpuTime()
 
-runShellCommand("clear")
+#runShellCommand("clear")
 
 case paramStr(1):
-    of "-a" : #all
-        runShellCommand(fmt"cd src && ./buildYara {paramStr(2)} && cd ..")
+    of "-e" : #all
+        runShellCommand(fmt"cd src && nim c -r buildyara.nim {paramStr(2)} && cd ..")
     of "-m" : #malware
-        echo "pass"
-    of "-s" :  #sort
-        runShellCommand(fmt"python3 src/python/sortFilesComp.pyc {paramStr(2)}")
+        runShellCommand(fmt"cd src && nim c -r malware.nim {paramStr(2)} && cd ..")
     of "-p" :  #process
         runShellCommand("")
+    of "-c" : 
+        compile_all("src", "nim")
+        compile_all("src/rules", "yara")
     else : 
-        runShellCommand("clear && source info.sh && help")
+        runShellCommand("./info.sh")
 
 echo "Execution time : ", cpuTime() - t
