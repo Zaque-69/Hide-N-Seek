@@ -1,41 +1,34 @@
 #[
-  What this code do?
   With the 'extensions.nim' file, we can check if a file have its extension changed
   based on each file signature. This code build a YARA rule for each extension from a dir.
 
   list of signatures : https://en.wikipedia.org/wiki/List_of_file_signatures
-
   Z4que 2024 - All rights reserved
 ]#
 
-import json, strutils, os, strformat, sequtils
-from runCommand import runShellCommand, has_extension_changed
+import json, strutils, os, strformat, sequtils, std/terminal
+from common import filelist, runShellCommand
 
 var
-  json_data = parse_json(readFile("json/extensions.json"))
-  arg_1 : string = paramStr(1)
-  yara_rules_list : seq[string] = @[]
-  files_path_list : seq[string] = @[]
-  extensions_in_path : seq[string] = @[]
+  jsonData = parse_json(readFile("json/extensions.json"))   #Parsed data from 'json/extensions.json'
+  argument : string = paramStr(1)                           #The argument
+  rules : seq[string] = @[]                                 #List with the rules created based on extensions
+  argFiles : seq[string] = @[]                              #List with the arguments from the dir
+  extensions_in_path : seq[string] = @[]                    #List with the extensiosn in the argument dir
 
-#returning the files from a path
-proc return_file_list( path : string ) : seq[string] =
-  var list : seq[string] = @[] 
-  for file in walkDir(path) : 
-    add(list, file.path) 
+proc has_extension_changed * ( file : string ) : void = 
+  stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {file} has extension changed!") 
 
-  return list
-
-#[
-  parsing the elements from the "json/extensions.json" file 
-  The returned list can get one or more values
-]#
-proc parse_json_ext( extension : string ) : seq[string] = 
-  var  list : seq[string] = @[]
+proc parseJsonExtension( extension : string ) : seq[string] =
+  #Parsing the elements from the "json/extensions.json" file ( >=1 values )
+  var 
+    list : seq[string] = @[]
   try : 
-    var element : string = json_data[extension].get_str()
+    let 
+      element : string = jsonData[extension].get_str()
+      validextension : int = len(jsonData[extension])
 
-    if len(json_data[extension]) == 0 : 
+    if validextension == 0 : 
       add(list, element)
       return list
     
@@ -43,65 +36,66 @@ proc parse_json_ext( extension : string ) : seq[string] =
       for i in countup(1, 9) : 
         var extension2 = extension & intToStr(i)
         try : 
-          add(list, json_data[extension][extension2].get_str())
-        except : discard 
-  except : discard
+          add(list, jsonData[extension][extension2].get_str())
+        except : 
+          discard 
+  except : 
+    discard
 
   return list
 
-#[
-  Here we are making a yara rule structure file
-  The "content" variable contains all the rule that will be written. In
-  the declaration is the top of the rule, then the bytes and the final.
-]#
-proc yara_rule_structure( ext : string ) : string = 
+proc yaraRuleStructure( ext : string ) : string = 
+  #[ Yara rule structure file. The "content" variable
+  contains all the rule that will be written. ]#
   var 
     content : string = fmt"rule {ext}_rule " & '{' & '\n' & repeat(' ', 4) & "strings : " & '\n' 
-    extensions : seq[string] = parse_json_ext(ext)
-  
+    extensions : seq[string] = parseJsonExtension(ext)
+
   for i in 0..len(extensions) - 1 : 
     content &= repeat(' ', 8) & fmt"$s{i} = " & "{ " & extensions[i] & " }\n"
   content &= repeat(' ', 4) & "condition : any of them \n}"
 
-  if len(extensions) == 0 : content = ""  
+  if len(extensions) == 0 : 
+    content = ""  
+
   return content
 
-#This is the main procedure, where almost all the functon are used
 proc main() : void =
-  runShellCommand(fmt"nim c -r extensions.nim {arg_1}")
+  runShellCommand(fmt"nim c -r extensions.nim {argument}")
   
-  #creating .yara files in "yara" directory and adding the extensions to a sequence
-  for line in lines "File/extensions.txt" :
-    extensions_in_path.add(line)
-    writeFile(fmt"yara/{line}_rule.yara", yara_rule_structure(line))
+  for line in lines "files/extensions.txt" :
+    #creating .yara files in "yara" directory
+    extensionsInPath.add(line)
+    writeFile(fmt"yara/{line}_rule.yara", yaraRuleStructure(line))
 
-  #removing the yara rules for non-existend extension in "json/extensions.json"
   for file in walkDir("yara") : 
+    #removing the yara rules for non-existend extensions
     if len(readFile(file.path)) == 0 : 
-      runShellCommand(fmt"rm {file.path}")
+      runShellCommand(fmt"rm {file.path}")   
+
+  for i in 0..len(extensionsInPath) - 1 : 
+    #removing all the non-existend extensions from the json file
+    if len(parseJsonExtension(extensionsInPath[i])) == 0 : 
+      extensionsInPath[i] = ""
+  extensionsInPath = extensionsInPath.filterIt(it != "")
 
   #reading all the files from a path
-  yara_rules_list = return_file_list("yara")
-  files_path_list = return_file_list(arg_1)    
-
-  #removing all the non-existend extensions from ths json file in extensions seq
-  for i in 0..len(extensions_in_path) - 1 : 
-    if len(parse_json_ext(extensions_in_path[i])) == 0 : 
-      extensions_in_path[i] = ""
-  extensions_in_path = extensions_in_path.filterIt(it != "")
+  rules = filelist("yara")
+  argFiles = filelist(argument) 
 
   #This is the scan of the file ( the output )
-  for file in files_path_list : 
-    for rule in yara_rules_list : 
-      runShellCommand(fmt"yara {rule} {file} > File/positive_rule.txt")
-      let pr_content : seq[string] = readFile("File/positive_rule.txt").split().filterIt(it != "")
-
-      for ext in extensions_in_path : 
-        if len(pr_content) > 0 : 
-          if ( contains(pr_content[0], ext) and not contains(pr_content[1], ext) ) or ( not contains(pr_content[0], ext) and contains(pr_content[1], ext) ) : 
-            has_extension_changed(file)
+  for file in argFiles : 
+    for rule in rules : 
+      runShellCommand(fmt"yara {rule} {file} > files/positiverule.txt")
+      let content : seq[string] = readFile("files/positiverule.txt").split().filterIt(it != "")
+      
+      for extention in extensionsInPath : 
+        if content.len > 0 : 
+          if ( contains(content[0], extention) and not contains(content[1], extention) ) or ( not contains(content[0], extention) and contains(content[1], extention) ) : 
+            hasExtensionChanged(file)
         else : 
-          if contains(rule, ext) and contains(file, ext) : 
-             has_extension_changed(file)
+          if contains(rule, extention) and contains(file, extention) : 
+            echo fmt"yara {rule} {file} > files/positiverule.txt"
+            hasExtensionChanged(file)
 
 main()
