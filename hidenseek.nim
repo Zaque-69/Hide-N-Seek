@@ -1,11 +1,9 @@
 import strformat, times
 import std/[os]
 
-from src/runCommand import runShellCommand, compile_all
+from src/common import compile_all, runShellCommand
 
 let t : float = cpuTime()
-
-#runShellCommand("clear")
 
 case paramStr(1):
     of "-e" : #all
