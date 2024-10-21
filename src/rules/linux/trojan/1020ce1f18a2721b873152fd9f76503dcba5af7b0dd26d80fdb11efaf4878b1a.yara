@@ -54,8 +54,6 @@ rule _1020ce1f18a2721b873152fd9f76503dcba5af7b0dd26d80fdb11efaf4878b1a {
         // -U, --uuid <uuid>
         $c4 = { 2D 55 2C 20 2D 2D 75 75 69 64 20 3C 75 75 69 64 3E }
 
-
-
     condition : 
         ( $header at 0 ) 
         and 9 of ( $b* ) 
