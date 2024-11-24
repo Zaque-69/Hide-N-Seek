@@ -6,96 +6,113 @@
   Z4que 2024 - All rights reserved
 ]#
 
-import json, strutils, os, strformat, sequtils, std/terminal
-from common import filelist, runShellCommand
+import 
+  json, 
+  os, 
+  sequtils,
+  strformat,
+  strutils
 
-var
-  jsonData = parse_json(readFile("json/extensions.json"))   #Parsed data from 'json/extensions.json'
-  argument : string = paramStr(1)                           #The argument
-  rules : seq[string] = @[]                                 #List with the rules created based on extensions
-  argFiles : seq[string] = @[]                              #List with the arguments from the dir
-  extensions_in_path : seq[string] = @[]                    #List with the extensiosn in the argument dir
+from shell import 
+  hasExtensionChanged,
+  runShellCommand
 
-proc has_extension_changed * ( file : string ) : void = 
-  stdout.styledWriteLine(fgRed, styleBright, fmt"[WARNING!] File : {file} has extension changed!") 
+from helpers import 
+  fileList, 
+  stringToSequence
 
+# Parsing the elements from the "json/extensions.json" file ( >=1 values )
 proc parseJsonExtension( extension : string ) : seq[string] =
-  #Parsing the elements from the "json/extensions.json" file ( >=1 values )
   var 
     list : seq[string] = @[]
+    jsonData = parse_json(readFile("json/extensions.json")) 
+
   try : 
     let 
       element : string = jsonData[extension].get_str()
       validextension : int = len(jsonData[extension])
 
+    # If the extension have 1 header, we return the list
     if validextension == 0 : 
       add(list, element)
       return list
     
+    # Else we get all the headers from the extension (ex : zip1, zip2, ...)
     else : 
       for i in countup(1, 9) : 
         var extension2 = extension & intToStr(i)
-        try : 
-          add(list, jsonData[extension][extension2].get_str())
-        except : 
-          discard 
-  except : 
+        add(list, jsonData[extension][extension2].get_str())
+        
+  except KeyError: 
     discard
 
-  return list
+  list
 
-proc yaraRuleStructure( ext : string ) : string = 
-  #[ Yara rule structure file. The "content" variable
-  contains all the rule that will be written. ]#
+# Generate a rule by the extensions found, in the "yara" folder
+proc createYaraRuleByExtension( ext : string ) : string = 
   var 
     content : string = fmt"rule {ext}_rule " & '{' & '\n' & repeat(' ', 4) & "strings : " & '\n' 
     extensions : seq[string] = parseJsonExtension(ext)
 
   for i in 0..len(extensions) - 1 : 
-    content &= repeat(' ', 8) & fmt"$s{i} = " & "{ " & extensions[i] & " }\n"
+    content &= repeat(' ', 8) & fmt"        $s{i} = " & "{ " & extensions[i] & " }\n"
   content &= repeat(' ', 4) & "condition : any of them \n}"
 
   if len(extensions) == 0 : 
     content = ""  
 
-  return content
+  content
 
-proc main() : void =
+# Recursive function to find all the files with extensiosn changed in the path
+proc checkExtensionChanged( path : string, rulesFound : seq[string], extensionsFound : seq[string] ) = 
+  for file in walkDir(path) : 
+    if file.kind == pcFile : 
+      for rule in rulesFound : 
+        
+        # Calling the command to scan the files
+        runShellCommand(fmt"yara {rule} {path}")
+        let fileContent : string = readFile("File/positiverule.txt")
+        let seqContent : seq[string] = stringToSequence(fileContent)
+        
+        for ext in extensionsFound : 
+          if seqContent.len > 0 : 
+            if ( contains(seqContent[0], ext) and not contains(seqContent[1], ext) ) or ( not contains(seqContent[0], ext) and contains(seqContent[1], ext) ) : 
+              hasExtensionChanged(file.path)
+
+          else : 
+            if contains(rule, ext) and contains(file.path, ext) : 
+              hasExtensionChanged(file.path)
+
+    else : 
+      checkExtensionChanged(file.path, rulesFound, extensionsFound)     
+
+# The main procedure
+proc main() =
+  let  argument : string = paramStr(1) 
+  var                        
+    rules : seq[string] = fileList("yara")
+    extensionsInPath : seq[string] = @[]
+
   runShellCommand(fmt"nim c -r extensions.nim {argument}")
   
-  for line in lines "files/extensions.txt" :
-    #creating .yara files in "yara" directory
-    extensionsInPath.add(line)
-    writeFile(fmt"yara/{line}_rule.yara", yaraRuleStructure(line))
+  # Creating yara rules by the extensions found
+  for line in lines "File/extensions.txt" :
+    add(extensionsInPath, line)
+    writeFile(fmt"yara/{line}_rule.yara", createYaraRuleByExtension(line))
 
+  # Removing the yara rules for non-existend extensions
   for file in walkDir("yara") : 
-    #removing the yara rules for non-existend extensions
     if len(readFile(file.path)) == 0 : 
       runShellCommand(fmt"rm {file.path}")   
 
+  # Removing all the non-existend extensions from the json file
   for i in 0..len(extensionsInPath) - 1 : 
-    #removing all the non-existend extensions from the json file
     if len(parseJsonExtension(extensionsInPath[i])) == 0 : 
       extensionsInPath[i] = ""
   extensionsInPath = extensionsInPath.filterIt(it != "")
 
-  #reading all the files from a path
-  rules = filelist("yara")
-  argFiles = filelist(argument) 
+  # Calling the recursive function
+  checkExtensionChanged(argument, rules, extensionsInPath)
 
-  #This is the scan of the file ( the output )
-  for file in argFiles : 
-    for rule in rules : 
-      runShellCommand(fmt"yara {rule} {file} > files/positiverule.txt")
-      let content : seq[string] = readFile("files/positiverule.txt").split().filterIt(it != "")
-      
-      for extention in extensionsInPath : 
-        if content.len > 0 : 
-          if ( contains(content[0], extention) and not contains(content[1], extention) ) or ( not contains(content[0], extention) and contains(content[1], extention) ) : 
-            hasExtensionChanged(file)
-        else : 
-          if contains(rule, extention) and contains(file, extention) : 
-            echo fmt"yara {rule} {file} > files/positiverule.txt"
-            hasExtensionChanged(file)
-
-main()
+when isMainModule : 
+  main()

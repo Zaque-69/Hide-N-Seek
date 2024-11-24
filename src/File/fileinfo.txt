@@ -1,0 +1,6 @@
+total 6896
+-rw-r--r-- 1 z4que users     480 Nov 23 18:40 20241123_18h40m22s_grim.png
+-rw-r--r-- 1 z4que users   16824 Nov 23 17:54 40c849f427686fa13c8636d654a7264e6bbcac1283928771a4ef7cdcf8b37c8b.rs
+drwxr-xr-x 3 z4que users    4096 Nov 23 17:34 folder1
+-rw-r--r-- 1 z4que users     480 Nov 23 18:40 matamare.py
+-rw-r--r-- 1 z4que users 7024987 Nov 24 00:14 png.exe

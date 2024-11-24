@@ -1,6 +1,7 @@
 import os
 
-proc remDub( list : seq[string] ) : seq[string] =
+# Removing the duplicate extensions found
+proc removeDouble( list : seq[string] ) : seq[string] =
   var
      finalList : seq[string]
      boolrean : bool = true
@@ -16,37 +17,36 @@ proc remDub( list : seq[string] ) : seq[string] =
 
   return finalList
 
-var
-  files : seq[string]
-  finalFiles : seq[string]
-  extension : string 
-  boolrean : bool = false
+# The main procedure
+proc main() = 
+  let argument : string = paramStr(1)
+  var
+    finalFiles : seq[string]
+    extension : string 
+    check : bool = false
 
-writeFile("File/extensions.txt", "")
+  writeFile("File/extensions.txt", "")
 
-for file in walkDir(paramStr(1)) :
-  files.add(file.path)
+  for file in walkDir(argument) :
+    if file.kind == pcFile : 
+      for character in file.path : 
+        if character == '.' : 
+          check = true
 
-#removing duplicate files
+        if check : 
+          extension &= character
+      
+      #adding extensions without dots
+      if len(extension) > 0 : 
+        add(finalFiles, extension[1..len(extension) - 1])
+      
+      check = false
+      extension = ""
 
-for file in files :
-  for character in file : 
-    if character == '.' : 
-      boolrean = true
+  finalFiles = removeDouble(finalFiles)
 
-    if boolrean : 
-      extension &= character
-  
-  #adding extensions without dots
-  try : 
-    finalFiles.add(extension[1..len(extension) - 1])
-  except : 
-    discard
+  for ext in finalFiles :
+    writeFile("File/extensions.txt", readFile("File/extensions.txt") & ext & '\n')
 
-  boolrean = false
-  extension = ""
-
-finalFiles = remDub(finalFiles)
-
-for ext in finalFiles :
-  writeFile("File/extensions.txt", readFile("File/extensions.txt") & ext & '\n')
+when isMainModule :
+  main()
