@@ -6,15 +6,22 @@ rule PowerPoint_positive {
     strings : 
         $header = { 4D 5A }
 
-        	$c1 = "sys3.exe" ascii wide
-        	$c2 = "fucked-up-shit" ascii wide
+            // fucked-up-shit
+        	$a1 = { 66 75 63 6B 65 64 2D 75 70 2D 73 68 69 74 }
 
-        	$c3 = { 73 71 6C 68 6F 73 74 2E 64 6C 6C 00 53 65 53 68 75
-         	        74 64 6F 77 6E 50 72 69 76 69 6C 65 67 65 }
+            // sqlhost.dllw
+        	$a2 = { 73 71 6C 68 6F 73 74 2E 64 6C 6C }
+
+            // SeShutdownPrivilege
+        	$a3 = { 53 65 53 68 75 74 64 6F 77 6E 50 72 69 76 69 6C 65 67 65 }
         
-        	$c4 = { 68 74 74 70 3A 2F 2F 00 52 4C }
+            // \sys3.exe
+        	$a4 = { 5C 73 79 73 33 2E 65 78 65 }
+
+            // \systm.txt
+            $a5 = { 5C 73 79 73 74 6D 2E 74 78 74 }
 
     condition : 
         ( $header at 0 ) 
-        and all of ( $c* ) 
+        and 1 of ( $a* ) 
 }
