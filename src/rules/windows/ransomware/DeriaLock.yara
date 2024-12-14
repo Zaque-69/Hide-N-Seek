@@ -1,4 +1,4 @@
-rule DeriaLock{
+rule DeriaLock {
 	meta : 
 		author = "Z4que - All rights reserved"
 		date = "13/12/2024"
@@ -44,7 +44,6 @@ rule DeriaLock{
 
 		// \Projects\LOGON\LOGON\obj\Debug\LOGON.pdb
 		$a13 = { 5C 50 72 6F 6A 65 63 74 73 5C 4C 4F 47 4F 4E 5C 4C 4F 47 4F 4E 5C 6F 62 6A 5C 44 65 62 75 67 5C 4C 4F 47 4F 4E 2E 70 64 62 }
-
 
 	condition : 
 		($header at 0 ) 

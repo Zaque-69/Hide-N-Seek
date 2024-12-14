@@ -1,4 +1,4 @@
-rule InfinityCrypt{
+rule InfinityCrypt {
 	meta : 
 		author = "Z4que - All rights reserved"
 		date = "13/12/2024"
@@ -26,7 +26,6 @@ rule InfinityCrypt{
 
 		// C.:.\.U.s.e.r.s.\..��>.e.n.c.r.y.p.t...e.x.e
 		$a7 = { 43 00 3A 00 5C 00 55 00 73 00 65 00 72 00 73 00 5C 00 00 80 87 3E 00 65 00 6E 00 63 00 72 00 79 00 70 00 74 00 2E 00 65 00 78 00 65 }
-
 
 	condition : 
 		($header at 0 ) 

@@ -1,5 +1,5 @@
 rule Koteyka2 { 
-        meta : 
+    meta : 
         author = "Z4que - All rights reverved"
 		date = "13/12/2024"
 

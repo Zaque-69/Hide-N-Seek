@@ -1,7 +1,7 @@
 rule Evascape { 
-        meta : 
+    meta : 
         author = "Z4que - All rights reverved"
-		date = "13/12/2024"
+        date = "13/12/2024"
 
     strings : 
         $header = { 4D 5A 50 }
@@ -33,5 +33,5 @@ rule Evascape {
     condition : 
         ( $header at 0 ) 
         and 7 of ( $a* ) 
-        and filesize < 10000KB
+        and filesize < 1000KB
 }
