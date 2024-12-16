@@ -1,21 +1,35 @@
-import strformat, times
-import std/[os]
+import 
+    os,
+    strformat, 
+    times
 
-from src/common import compile_all, runShellCommand
+from src/shell import runShellCommand
+from src/helpers import compileAll
 
-let t : float = cpuTime()
+# The main procedure
+proc main() = 
 
-case paramStr(1):
-    of "-e" : #all
-        runShellCommand(fmt"cd src && nim c -r buildyara.nim {paramStr(2)} && cd ..")
-    of "-m" : #malware
-        runShellCommand(fmt"cd src && nim c -r malware.nim {paramStr(2)} && cd ..")
-    of "-p" :  #process
-        runShellCommand("")
-    of "-c" : 
-        compile_all("src", "nim")
-        compile_all("src/rules", "yara")
-    else : 
-        runShellCommand("./info.sh")
+    let 
+        initTime : float = cpuTime()
 
-echo "Execution time : ", cpuTime() - t
+    case paramStr(1):
+        of "-e" : #all
+            runShellCommand(fmt"cd src && nim c -r buildyara.nim {paramStr(2)} && cd ..")
+
+        of "-m" :
+            runShellCommand(fmt"cd src && nim c -r malware.nim {paramStr(2)} && cd ..")
+
+        of "-p" : 
+            runShellCommand("")
+
+        of "-c" : 
+            compileAll("src", "nim")
+            compileAll("src/rules", "yara")
+
+        else : 
+            runShellCommand("nim c -r info.nim")
+
+    echo "Execution time : ", cpuTime() - initTime
+
+if isMainModule : 
+    main()
