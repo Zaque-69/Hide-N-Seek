@@ -70,7 +70,7 @@ proc checkExtensionChanged( path : string, rulesFound : seq[string], extensionsF
       for rule in rulesFound : 
         
         # Calling the command to scan the files
-        runShellCommand(fmt"yara {rule} {path}")
+        runShellCommand(fmt"yara {rule} {path} > File/positiverule.txt")
         let fileContent : string = readFile("File/positiverule.txt")
         let seqContent : seq[string] = stringToSequence(fileContent)
         
