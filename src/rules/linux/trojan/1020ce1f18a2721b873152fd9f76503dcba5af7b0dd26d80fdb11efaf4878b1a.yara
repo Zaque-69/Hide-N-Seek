@@ -31,8 +31,7 @@ rule _1020ce1f18a2721b873152fd9f76503dcba5af7b0dd26d80fdb11efaf4878b1a {
         $b8 = { 4C 69 63 65 6E 73 65 3A }
 
         // /mettle/mettle/src/stdapi/net/resolve.c
-        $b9 = { 2F 6D 65 74 74 6C 65 2F 6D 65 74 74 6C 65 2F 73 72 63 2F 73 74 64 61 70 69 2F 6E 65 74 2F
-            72 65 73 6F 6C 76 65 2E 63 }
+        $b9 = { 2F 6D 65 74 74 6C 65 2F 6D 65 74 74 6C 65 2F 73 72 63 2F 73 74 64 61 70 69 2F 6E 65 74 2F 72 65 73 6F 6C 76 65 2E 63 }
 
         // /usr/local/bin
         $b10 = { 2F 75 73 72 2F 6C 6F 63 61 6C 2F 62 69 6E }
@@ -41,12 +40,10 @@ rule _1020ce1f18a2721b873152fd9f76503dcba5af7b0dd26d80fdb11efaf4878b1a {
         $b11 = { 2F 75 73 72 2F 6C 6F 63 61 6C 2F 73 62 69 6E }
 
         // -p, --persist [none|install|uninstall] manage persistence
-        $c1 = { 2D 70 2C 20 2D 2D 70 65 72 73 69 73 74 20 5B 6E 6F 6E 65 7C 69 6E 73 74 61 6C 6C 7C 75 6E
-            69 6E 73 74 61 6C 6C 5D 20 6D 61 6E 61 67 65 20 70 65 72 73 69 73 74 65 6E 63 65 }        
+        $c1 = { 2D 70 2C 20 2D 2D 70 65 72 73 69 73 74 20 5B 6E 6F 6E 65 7C 69 6E 73 74 61 6C 6C 7C 75 6E 69 6E 73 74 61 6C 6C 5D 20 6D 61 6E 61 67 65 20 70 65 72 73 69 73 74 65 6E 63 65 }        
    
         // -m, --modules <path>   add modules from path
-        $c2 = { 2D 6D 2C 20 2D 2D 6D 6F 64 75 6C 65 73 20 3C 70 61 74 68 3E 20 20 20 61 64 64 20 6D 6F 64
-            75 6C 65 73 20 66 72 6F 6D 20 70 61 74 68 }
+        $c2 = { 2D 6D 2C 20 2D 2D 6D 6F 64 75 6C 65 73 20 3C 70 61 74 68 3E 20 20 20 61 64 64 20 6D 6F 64 75 6C 65 73 20 66 72 6F 6D 20 70 61 74 68 }
 
         // -c, --console.hu:U:G:d:o:b:p:n:lcm
         $c3 = { 2D 63 2C 20 2D 2D 63 6F 6E 73 6F 6C 65 00 68 75 3A 55 3A 47 3A 64 3A 6F 3A 62 3A 70 3A 6E 3A 6C 63 6D }

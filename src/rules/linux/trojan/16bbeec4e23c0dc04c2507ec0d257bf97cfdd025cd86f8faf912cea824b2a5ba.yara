@@ -40,8 +40,7 @@ rule _16bbeec4e23c0dc04c2507ec0d257bf97cfdd025cd86f8faf912cea824b2a5ba {
         $b11 = { 2F 75 73 72 2F 62 69 6E 2F 79 75 6D }
 
         // /home/landley/work/ab7/build/temp-mips64/gcc-core/gcc
-        $b12 = { 2F 68 6F 6D 65 2F 6C 61 6E 64 6C 65 79 2F 77 6F 72 6B 2F 61 62 37 2F 62 75 69 6C 64 2F 74 65 6D 70 2D 6D 69 70 73 36
-            34 2F 67 63 63 2D 63 6F 72 65 2F 67 63 63 }
+        $b12 = { 2F 68 6F 6D 65 2F 6C 61 6E 64 6C 65 79 2F 77 6F 72 6B 2F 61 62 37 2F 62 75 69 6C 64 2F 74 65 6D 70 2D 6D 69 70 73 36 34 2F 67 63 63 2D 63 6F 72 65 2F 67 63 63 }
 
     condition : 
         ( $header at 0 ) 
