@@ -11,4 +11,9 @@ File manager and malware detector.
                 from a directory have malicious bytes using YARA rules.
                     
 ex : ./hidenseek -m /home/{user}/Desktop/downloaded_dir
+
+The malware scanned for this software : 
+    https://github.com/Endermanch/MalwareDatabase
+    https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main
+    https://github.com/timb-machine/linux-malware
 """
