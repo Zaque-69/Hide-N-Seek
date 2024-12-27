@@ -25,7 +25,7 @@ proc main() =
     extension : string 
     check : bool = false
 
-  writeFile("File/extensions.txt", "")
+  writeFile("files/extensions.txt", "")
 
   for file in walkDir(argument) :
     if file.kind == pcFile : 
@@ -46,7 +46,7 @@ proc main() =
   finalFiles = removeDouble(finalFiles)
 
   for ext in finalFiles :
-    writeFile("File/extensions.txt", readFile("File/extensions.txt") & ext & '\n')
+    writeFile("files/extensions.txt", readFile("files/extensions.txt") & ext & '\n')
 
 when isMainModule :
   main()

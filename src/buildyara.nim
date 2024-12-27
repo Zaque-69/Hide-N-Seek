@@ -70,8 +70,8 @@ proc checkExtensionChanged( path : string, rulesFound : seq[string], extensionsF
       for rule in rulesFound : 
         
         # Calling the command to scan the files
-        runShellCommand(fmt"yara {rule} {path} > File/positiverule.txt")
-        let fileContent : string = readFile("File/positiverule.txt")
+        runShellCommand(fmt"yara {rule} {path} > files/positiverule.txt")
+        let fileContent : string = readFile("files/positiverule.txt")
         let seqContent : seq[string] = stringToSequence(fileContent)
         
         for ext in extensionsFound : 
@@ -96,7 +96,7 @@ proc main() =
   runShellCommand(fmt"nim c -r extensions.nim {argument}")
   
   # Creating yara rules by the extensions found
-  for line in lines "File/extensions.txt" :
+  for line in lines "files/extensions.txt" :
     add(extensionsInPath, line)
     writeFile(fmt"yara/{line}_rule.yara", createYaraRuleByExtension(line))
 
