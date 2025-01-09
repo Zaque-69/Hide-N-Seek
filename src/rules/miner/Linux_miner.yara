@@ -1,12 +1,12 @@
 rule Linux_miner {
     meta : 
 		creation_date = "28/12/2024"
-        fingerprint = "8c61e57decdb804b2264a6dd5a748208174b9c14d98cd5bbfc9551cea780f801"
+        update_date = "09.01.2025"
+        fingerprint = "951DE0AD70883AFB6D4FA67E676E991F6423C7C64EBB9C2D95D140AF23F37AD1"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // Don't expect high hashrates
         $b1 = { 44 6F 6E 27 74 20 65 78 70 65 63 74 20 68 69 67 68 20 68 61 73 68 72 61 74 65 73 }
@@ -18,7 +18,6 @@ rule Linux_miner {
         $b3 = { 55 6E 72 65 63 6F 67 6E 69 73 65 64 20 63 6F 69 6E }
 
     condition : 
-        ( $header at 0 )
-        and any of ( $b* )
+        any of ( $b* )
         and filesize > 2MB
 }

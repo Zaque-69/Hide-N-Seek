@@ -1,12 +1,12 @@
 rule Linux_TSource_Engine_Query_trojan { 
     meta : 
 		creation_date = "18/12/2024"
-        fingerprint = "fbb6519406abce86330834b4068bfcc57ab24271ba3d1ccb71ff3357f207e407"
+        update_date = "09/01/2025"
+        fingerprint = "6909F0993305058452A30A8E321C3BC8952AF7D954195435C1C87A4AC1A265BC"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // /etc/config/resolv.conf
         $b1 = { 2F 65 74 63 2F 63 6F 6E 66 69 67 2F 72 65 73 6F 6C 76 2E 63 6F 6E 66 }
@@ -21,8 +21,7 @@ rule Linux_TSource_Engine_Query_trojan {
         $msg = { 64 65 64 73 65 63 72 75 6E 73 79 6F 75 6C 69 6C 61 73 73 6E 69 67 67 61 }
 
     condition : 
-        ( $header at 0 ) 
-        and all of ( $b* ) 
+        all of ( $b* ) 
         and ( $msg or true )
         and filesize > 50KB
 }

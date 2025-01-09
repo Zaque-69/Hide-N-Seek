@@ -1,13 +1,13 @@
 rule Linux_bitcoin_miner { 
     meta : 
 		creation_date = "28/12/2024"
-        fingerprint = "310b360a0e99ff689ea256384a65eb6abdab5c7400e40b31950c06c2a3bd8109"
+        update_date = "09/01/2025"
+        fingerprint = "C9527DC047EED07AAE046F79CEDA09A791F8EDBE0925C66B9409D3B1E16BED62"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
-        
+
         // bitcoin-core
         $b1 = { 62 69 74 63 6F 69 6E 2D 63 6F 72 65 }
 
@@ -17,7 +17,6 @@ rule Linux_bitcoin_miner {
         // CWallet::GetDebit()
         $b3 = { 43 57 61 6C 6C 65 74 3A 3A 47 65 74 44 65 62 69 74 28 29 }
 
-    condition : 
-        ( $header at 0 ) 
-        and 2 of ( $b* ) 
+    condition :  
+        2 of ( $b* ) 
 }

@@ -1,12 +1,12 @@
 rule Linux_python_trojan { 
     meta : 
 		creation_date = "27/10/2024"
-        fingerprint = "efbf398143487477bdf999108b968e409018d8f79ed88a3965e2eacaf0a29e72"
+        update_date = "09/01/2025"
+        fingerprint = "8077FD69CB3EAFE0238D184CF859B89B36FC88D6554EED8A51EF69109FE9CDBD"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // Failed to get _MEIPASS as PyObjec
         $b1 = { 46 61 69 6C 65 64 20 74 6F 20 67 65 74 20 5F 4D 45 49 50 41 53 53 20 61 73 20 50 79 4F 62 6A 65 63 }

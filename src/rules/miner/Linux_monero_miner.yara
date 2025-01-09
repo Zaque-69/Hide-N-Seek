@@ -1,12 +1,12 @@
 rule Linux_monero_miner {
     meta : 
 		creation_date = "28/12/2024"
-        fingerprint = "96188a11993ccb319bc2703ce4ff08223c4b253fae0ffe8eca9064dd997814b3"
+        update_date = "09/01/2025"
+        fingerprint = "1783F4B095072137D760162064BACCAD4DBC6BA2BEC67905D56469D44466A855"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // cryptonight
         $b1 = { 63 72 79 70 74 6F 6E 69 67 68 74 }
@@ -33,7 +33,37 @@ rule Linux_monero_miner {
         $b9 = { 58 4D 52 49 47 }
 
     condition : 
-        ( $header at 0 ) 
-        and 4 of ( $b* ) 
+        4 of ( $b* ) 
         and filesize > 1MB
+}
+
+rule Linux_monero_miner_1eb236 {
+    meta : 
+		creation_date = "09/01/2025"
+        fingerprint = "C4849A5270C978534BCC29882F5CFB26BB7D5F17480078E7B4B5F1E74656C3B9"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings :         
+        $b1 = { E0 08 C1 ED 10 41 31 C3 89 D8 45 09 D0 C1 E8 10 C1 E3 10 41 C1 }
+
+    condition : 
+        all of them
+        and filesize > 500KB
+}
+
+rule Linux_monero_miner_prometei {
+    meta : 
+		creation_date = "09/01/2025"
+        fingerprint = "3C54FB5D927067866B60CB86D5109E536E277373F2D5C1474EE4828B0635DA10"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // cgi-bin/prometei.cgi        
+        $b1 = { 63 67 69 2D 62 69 6E 2F 70 72 6F 6D 65 74 65 69 2E 63 67 69 }
+
+    condition : 
+        all of them
 }

@@ -1,12 +1,12 @@
 rule Linux_mirai_trojan { 
     meta : 
 		creation_date = "29/12/2024"
-        fingerprint = "af7780f352718919c4fb1811d61932e9c5b6fb19e31c40e31128ba5baefaf5b8"
+        update_date = "09/01/2025"
+        fingerprint = "8A5771A3FF2A167465DF75BCEB004E1742E69C7BD969A50BAE498F498C8AF8ED"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // b0tn3t
         $b1 = { 62 30 74 6E 33 74 }
@@ -21,12 +21,12 @@ rule Linux_mirai_trojan {
 rule Linux_mirai_trojan_pastebin { 
     meta : 
 		creation_date = "29/12/2024"
-        fingerprint = "3a6513ad548606a70424c998e44ad3f37021f516489a350043d2435a44dfa220"
+        update_date = "09/01/2025"
+        fingerprint = "DCFB8DDC3690BC6FF63F47C9C97F34ABDE409E490A0E7496875CE897A5CA5594"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // Host: %s..Connection: close
         $b1 = { 48 6F 73 74 3A 20 25 73 0D 0A 43 6F 6E 6E 65 63 74 69 6F 6E 3A 20 63 6C 6F 73 65 }

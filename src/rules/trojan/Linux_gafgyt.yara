@@ -1,12 +1,12 @@
 rule Linux_gafgyt_trojan { 
     meta : 
 		creation_date = "28/12/2024"
-        fingerprint = "7642fcfce0e684bd0d7e98c4bbd37d94f8c653f89a00752b0b0d6a2ca1f94b64"
+        update_date = "09/01/2025"
+        fingerprint = "50A7031A16B88DA0064978014CE9B0DBD12D435CF3D64F622D5DFB85A161A343"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
         
         // WANPPPConnection:1
         $b1 = { 57 41 4E 50 50 50 43 6F 6E 6E 65 63 74 69 6F 6E 3A 31 }
@@ -30,8 +30,7 @@ rule Linux_gafgyt_trojan {
         $ip1 = { 77 67 65 74 20 2D 67 20 31 38 35 2E 31 31 37 2E 31 31 39 2E 37 31 }
 
     condition : 
-        ( $header at 0 ) 
-        and 3 of ( $b* )
+        3 of ( $b* )
         and ( $ip1 or true ) 
         and filesize < 1000KB
 }
@@ -39,13 +38,13 @@ rule Linux_gafgyt_trojan {
 rule Linux_gafgyt_trojan_1ea3d { 
     meta : 
 		creation_date = "28/12/2024"
-        fingerprint = "dbed61f623d0f915bc0841a016c606423661514b92d1bc797533415690ddbfaa"
+        update_date = "09/01/2025"
+        fingerprint = "4A7FFCCA1D0BAAA13A150D1D7A767940D95922954F9A425D44FC86ED1FF866EC"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
-        $header = { 7F 45 4C 46 }
-        
+
         // /x38/xFJ/x93/xID/x9A
         $b1 = { 2F 78 33 38 2F 78 46 4A 2F 78 39 33 2F 78 49 44 2F 78 39 41 }
 
