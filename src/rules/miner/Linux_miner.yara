@@ -21,3 +21,43 @@ rule Linux_miner {
         any of ( $b* )
         and filesize > 2MB
 }
+
+rule Linux_miner_c968b1bd { 
+    meta : 
+		creation_date = "11/01/2024"
+        fingerprint = "3F3E8B4F7D43570C3DE4DD3677CFD2492A915E95BD7A6CAAEF609E9843257FCA"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // PROT_EXEC|PROT_WRITE failed
+        $b1 = { 50 52 4F 54 5F 45 58 45 43 7C 50 52 4F 54 5F 57 52 49 54 45 20 66 61 69 6C 65 64 }
+
+        // HOSTNAME
+        $b2 = { 48 4F 53 54 4E 41 4D 45 }
+
+        // 1996-2020 the UPX Team
+        $b3 = { 31 39 39 36 2D 32 30 32 30 20 74 68 65 20 55 50 58 20 54 65 61 6D }
+
+    condition :  
+        all of them
+        and filesize > 500KB
+}
+
+rule Linux_miner_5c03ff30 { 
+    meta : 
+		creation_date = "11/01/2025"
+        fingerprint = "772486CD7FAF27497CF57CA3916DC8794EEC8668F41A39E776FFCB4DB0691D14"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // coin is not valid
+        $b1 = { 63 6F 69 6E 20 69 73 20 6E 6F 74 20 76 61 6C 69 64 }
+
+    condition :  
+        all of them
+        and filesize > 2MB
+}

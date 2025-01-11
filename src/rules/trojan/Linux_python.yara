@@ -1,4 +1,4 @@
-rule Linux_python_trojan { 
+rule Linux_python_trojan_ed077ecc { 
     meta : 
 		creation_date = "27/10/2024"
         update_date = "09/01/2025"
@@ -19,4 +19,22 @@ rule Linux_python_trojan {
 
     condition : 
         all of them
+}
+
+rule Linux_python_trojan_03bb1cfd { 
+    meta : 
+		creation_date = "27/10/2024"
+        update_date = "09/01/2025"
+        fingerprint = "A5F6C96E2246669B046B539D9E4FC806A8F87FA46E6619EB438A14DA37B49A6E"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+        
+        // Cannot dlsym for Py_
+        $b1 = { 43 61 6E 6E 6F 74 20 64 6C 73 79 6D 20 66 6F 72 20 50 79 5F }
+
+    condition : 
+        all of them
+        and filesize > 1MB
 }
