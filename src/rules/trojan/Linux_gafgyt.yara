@@ -1,8 +1,8 @@
 rule Linux_gafgyt_trojan { 
     meta : 
-		creation_date = "28/12/2024"
+	creation_date = "28/12/2024"
         update_date = "09/01/2025"
-        fingerprint = "50A7031A16B88DA0064978014CE9B0DBD12D435CF3D64F622D5DFB85A161A343"
+        fingerprint = "8254BE87FC5C570AEAF3C3D1DC6C5E3AA85E81A80536B5969B507A7F96B2B44E"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -37,9 +37,9 @@ rule Linux_gafgyt_trojan {
 
 rule Linux_gafgyt_trojan_1ea3d { 
     meta : 
-		creation_date = "28/12/2024"
+	creation_date = "28/12/2024"
         update_date = "09/01/2025"
-        fingerprint = "4A7FFCCA1D0BAAA13A150D1D7A767940D95922954F9A425D44FC86ED1FF866EC"
+        fingerprint = "978055B12E601F5D16285AE2B8ADB9FF091EB5083F8C00B5C11F4C786A6A7C57"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -55,8 +55,8 @@ rule Linux_gafgyt_trojan_1ea3d {
 
 rule Linux_gafgyt_trojan_3dcad97 { 
     meta : 
-		creation_date = "11/01/2025"
-        fingerprint = "F23F19E1D2F71AE5D5496E6365D986467FAE48DE64262AB9F7CFF46B29997CDC"
+	creation_date = "11/01/2025"
+        fingerprint = "E1D358F0D356A7B27FF41D230A4171DDD8C84CA08092F7BADFB8FAC6CCD2CAF4"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -70,4 +70,29 @@ rule Linux_gafgyt_trojan_3dcad97 {
 
     condition : 
         all of them
+}
+
+rule Linux_gafgyt_trojan_4a192a22{
+    meta : 
+	creation_date = "16/01/2025"
+	fingerprint = "4C603486C52754FD09AFDA23E82850B1531D42AFB6FA4A72CDA9BDB335D69B10"
+	github = "https://github.com/Zaque-69"
+	os = "Linux"
+	
+    strings : 
+
+	// PROT_EXEC
+	$b1 = { 50 52 4F 54 5F 45 58 45 }
+
+	// PROT_WRITE
+	$b2 = { 50 52 4F 54 5F 57 52 49 54 45 }
+
+	// failed
+	$b3 = { 66 61 69 6C 65 64 }
+
+	// proc/self/exe
+	$b4 = { 70 72 6F 63 2F 73 65 6C 66 2F 65 78 65 }
+
+    condition : 
+	all of them
 }
