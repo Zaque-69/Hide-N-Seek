@@ -90,7 +90,7 @@ proc checkExtensionChanged( path : string, rulesFound : seq[string], extensionsF
 proc main() =
   let  argument : string = paramStr(1) 
   var                        
-    rules : seq[string] = fileList("yara")
+    rules : seq[string] = fileList("extensions")
     extensionsInPath : seq[string] = @[]
 
   runShellCommand(fmt"nim c -r extensions.nim {argument}")
@@ -98,10 +98,10 @@ proc main() =
   # Creating yara rules by the extensions found
   for line in lines "files/extensions.txt" :
     add(extensionsInPath, line)
-    writeFile(fmt"yara/{line}_rule.yara", createYaraRuleByExtension(line))
+    writeFile(fmt"extensions/{line}_rule.yara", createYaraRuleByExtension(line))
 
   # Removing the yara rules for non-existend extensions
-  for file in walkDir("yara") : 
+  for file in walkDir("extensions") : 
     if len(readFile(file.path)) == 0 : 
       runShellCommand(fmt"rm {file.path}")   
 

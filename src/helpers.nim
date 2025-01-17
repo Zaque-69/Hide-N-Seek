@@ -23,12 +23,6 @@ proc fileList * ( path : string ) : seq[string] =
         add(list, file.path) 
     return list
 
-# Returning a string with your OS
-proc returnOS * () : string = 
-    when defined windows: 
-        return "windows"
-    return "linux"
-
  # Transforming a string to a sequence
 proc stringToSequence * ( file : string ) : seq[string] = 
     return file.split().filterIt(it != "")
