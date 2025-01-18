@@ -19,7 +19,7 @@ proc checkFileFlooderTrojan(filename : string) : void =
         count += 1
 
         # Checking for a specific dimension of the file 
-        if fileSize(5000, 15000, filename) : 
+        if fileSize(5000, 100000, filename) : 
             count += 1
 
         # Checking for if the file have a Linux executable header
