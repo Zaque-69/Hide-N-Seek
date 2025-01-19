@@ -1,7 +1,7 @@
-rule Linux_trojan_mettlesploit_4eae9a20 {
+rule Linux_mettlesploit_trojan_4eae9a20 {
     meta : 
 		creation_date = "17/01/2025"
-        fingerprint = "3326044B9299F1032F3E2E7F775A33B4F0D59596DAAAD0C90233195119FE8990"
+        fingerprint = "9C4FA5A472437EA545EA974A6B4EA01EAEEA1D5378C6AC0044419D714FC01526"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 

@@ -1,7 +1,7 @@
-rule Linux_sshdoor_6de1e587 {
+rule Linux_sshdoor__trojan_6de1e587 {
     meta : 
 		creation_date = "18/01/2025"
-        fingerprint = ""
+        fingerprint = "63B2400EBE3B876A72B2F8C8E1D795A142F27D73B3C5F2A258A14CF93118CD18"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 

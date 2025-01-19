@@ -1,7 +1,7 @@
-rule Linux_diamorphine_5d637915 {
+rule Linux_diamorphine__trojan_5d637915 {
     meta : 
 		creation_date = "18/01/2025"
-        fingerprint = "650100F700FF98ADACE8B459176DE3E7FED1248128C6D52C3D6926417F60A666"
+        fingerprint = "E344F438ABF23AD88A8024A0D192C83B0B95CB233B2D074F689E71037EF1CAB4"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
