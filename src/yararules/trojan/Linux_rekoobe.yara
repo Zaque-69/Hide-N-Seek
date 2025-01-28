@@ -1,7 +1,8 @@
 rule Linux_rekoobe_trojan_ccf42d51 { 
     meta : 
-		creation_date = "29/01/2025"
-        fingerprint = "B481FD4458523A25EF0F413CAFF2530AF2073C3852CED65DDE1F6343E95418E0"
+		creation_date = "19/01/2025"
+        update_date = "28/01/2025"
+        fingerprint = "19C2F916C89155F5051E5371EB0B1C7B3D2A78477829F7DB8E9011230CA856AA"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -14,6 +15,6 @@ rule Linux_rekoobe_trojan_ccf42d51 {
         $hmac2 = { 5C 5C 5C 5C 5C 5C 5C 5C }
 
     condition : 
-        all of them
-        and filesize > 500KB
+        filesize > 500KB
+        and all of them
 }

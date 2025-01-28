@@ -1,8 +1,8 @@
 rule Linux_gafgyt_trojan { 
     meta : 
 	    creation_date = "28/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "A46561EDA50963FC7D35D513C8F6DBA498AA8D034B57FC65971D29D7C1DDB472"
+        update_date = "028/01/2025"
+        fingerprint = "8E7995704982AEBD8B244DDE8F58D64A2354644128EEE625F12A11144208498A"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -29,17 +29,17 @@ rule Linux_gafgyt_trojan {
         // wget -g 185.117.119.71
         $ip1 = { 77 67 65 74 20 2D 67 20 31 38 35 2E 31 31 37 2E 31 31 39 2E 37 31 }
 
-    condition : 
-        3 of ( $b* )
-        and ( $ip1 or true ) 
-        and filesize < 1000KB
+    condition :
+        filesize < 1MB 
+        and 3 of ( $b* )
+        and ( $ip1 or true )
 }
 
 rule Linux_gafgyt_trojan_1ea3d { 
     meta : 
         creation_date = "28/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "F63506FAD16D4F5CAC7A332EC3CF2299B5FDBCE3A455E0C59DF4A14C95FA2C8A"
+        update_date = "28/01/2025"
+        fingerprint = "6E706C1AE572062A8433847E9ACE9085D1736BBC23668D406FF7CAB5C711F391"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -49,14 +49,14 @@ rule Linux_gafgyt_trojan_1ea3d {
         $b1 = { 2F 78 33 38 2F 78 46 4A 2F 78 39 33 2F 78 49 44 2F 78 39 41 }
 
     condition : 
-        all of them
-        and filesize < 1000KB
+        filesize < 1MB 
+        and all of them
 }
 
-rule Linux_gafgyt_trojan_3dcad97 { 
+rule Linux_gafgyt_trojan_3dcad97c { 
     meta : 
 	    creation_date = "11/01/2025"
-        fingerprint = "D3E7E92650BC61692A0AAB1501D6C45E72CAB600C0D31AAAFBC284446C768E00"
+        fingerprint = "FF6A569D2A38DC79D1B709FE19DCCCED043900D295C48E1D6F0316090C97E333"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -72,10 +72,11 @@ rule Linux_gafgyt_trojan_3dcad97 {
         all of them
 }
 
-rule Linux_gafgyt_trojan_4a192a22{
+rule Linux_gafgyt_trojan_4a192a22 {
     meta : 
         creation_date = "16/01/2025"
-        fingerprint = "864F99CB55353E9395970085C07ADC613A461834FD92A76F7ADA2F57C0AA2184"
+        update_date = "28/01/2025"
+        fingerprint = "EFA3E52672729D91CD3E80AC244FAC8FCF731671A4C6853E6B03E6BF53E58097"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 	
@@ -94,5 +95,5 @@ rule Linux_gafgyt_trojan_4a192a22{
         $b4 = { 70 72 6F 63 2F 73 65 6C 66 2F 65 78 65 }
 
     condition : 
-	all of them
+	    all of them
 }

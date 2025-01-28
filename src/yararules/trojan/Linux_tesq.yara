@@ -1,8 +1,8 @@
 rule Linux_TSource_Engine_Query_trojan { 
     meta : 
 		creation_date = "18/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "6909F0993305058452A30A8E321C3BC8952AF7D954195435C1C87A4AC1A265BC"
+        update_date = "28/01/2025"
+        fingerprint = "916195365F1339E9142376C4E87555A44E8017F4D7CDDEE4DE8B037BAB0D58A4"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -20,8 +20,8 @@ rule Linux_TSource_Engine_Query_trojan {
         // dedsecrunsyoulilassnigga
         $msg = { 64 65 64 73 65 63 72 75 6E 73 79 6F 75 6C 69 6C 61 73 73 6E 69 67 67 61 }
 
-    condition : 
-        all of ( $b* ) 
+    condition :
+        filesize > 50KB 
+        and all of ( $b* ) 
         and ( $msg or true )
-        and filesize > 50KB
 }

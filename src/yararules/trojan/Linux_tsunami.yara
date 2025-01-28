@@ -1,7 +1,7 @@
-rule Linux_tronami_trojan_7a60c84f { 
+rule Linux_tsunami_trojan_7a60c84f { 
     meta : 
 		creation_date = "19/01/2025"
-        fingerprint = "82B0BADF80E60BBCCA49A03BB51A1B1B6ED12439250BCBAF22FD95E1EB88A973"
+        fingerprint = "F815B359BCF5BE67181D5E0828035CF42E804336C0E734389DAC3DD2EC6D3B8D"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 

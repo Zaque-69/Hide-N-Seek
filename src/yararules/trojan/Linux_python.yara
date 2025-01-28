@@ -38,3 +38,22 @@ rule Linux_python_trojan_03bb1cfd {
         all of them
         and filesize > 1MB
 }
+
+rule Linux_python_trojan_3993bc5c { 
+    meta : 
+		creation_date = "28/01/2025"
+        fingerprint = "55DE2949C2FDDFDA8303B36654D25C9EEEC7CC250F20ADC9280EC7D3F55F0963"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // PyObject
+        $b1 = { 50 79 4F 62 6A 65 63 74 }
+    
+        // Somebody screwed up
+        $b2 = { 53 6F 6D 65 62 6F 64 79 20 73 63 72 65 77 65 64 20 75 70 }
+
+    condition : 
+        all of them
+}
