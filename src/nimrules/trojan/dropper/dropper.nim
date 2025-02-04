@@ -34,9 +34,11 @@ proc checkFileDropperTrojan(filename : string) : void =
             for ip in ips : 
                 suspicious_ips &= checkEachSuspiciousLine(filename, suspiciousIPCombinationDroperTrojan(ip))
 
-            for sequence in @[suspicious_ips, suspicious_commands] :
-                if len(sequence) > 1 : 
-                    count += 1
+            if len(suspicious_ips) > 1 : 
+                count += 1
+
+            if len(suspicious_commands) > 1 : 
+                count += 1
 
             # Checking for a specific dimension of the file 
             if fileSize(60000, 200000, filename) : 
@@ -46,8 +48,8 @@ proc checkFileDropperTrojan(filename : string) : void =
             if checkHeaderELF(filename) : 
                 count += 1
         
-        if ( count >= 3 ) or ( count >= 2 and not checkHeaderELF(filename) ): 
-            echo "dropper_trojan ", filename
+        if ( count >= 4 ) or ( count >= 3 and not checkHeaderELF(filename) ): 
+            echo "Linux_dropper_trojan_" & filename[0..7], filename
             
     except OSError : 
         discard

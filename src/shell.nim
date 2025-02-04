@@ -5,13 +5,7 @@ import
     std/terminal
 
 proc echoWarning * ( file, positiveRule : string ) : void = 
-    # Echo the warning output of a PUA file
-
-    stdout.styledWriteLine(
-        fgRed, 
-        styleBright, 
-        fmt"[WARNING!] Path {file} may contain malitious bytes : {positiveRule}"
-    )
+    echo positiveRule, " ", file
 
 proc hasExtensionChanged * ( path : string ) : void = 
     # Echo the warning output of a file with extension changed

@@ -37,3 +37,41 @@ rule Linux_mirai_trojan_pastebin {
     condition : 
         all of them
 }
+
+rule Linux_mirai_trojan_9e35f0a9 { 
+    meta : 
+		creation_date = "02/02/2025"
+        fingerprint = "FD67E5F06AF67D26C184AA0A5B773A6D674C5CD591B2E6A142BF39CE041282C2"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+        
+        // KILLBOT
+        $b1 = { 4B 49 4C 4C 42 4F 54 }
+
+        // TCP
+        $b2 = { 54 43 50 }
+
+    condition : 
+        all of them
+}
+
+rule Linux_mirai_trojan_0a4b4171 { 
+    meta : 
+		creation_date = "04/02/2025"
+        fingerprint = ""
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+        
+        // PROT_EXEC|PROT_WRITE failed
+        $b1 = { 50 52 4F 54 5F 45 58 45 43 7C 50 52 4F 54 5F 57 52 49 54 45 20 66 61 69 6C 65 64 }
+
+        // sequen9D
+        $b2 = { 73 65 71 75 65 6E 39 44 }
+
+    condition : 
+        all of them
+}

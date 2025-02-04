@@ -17,7 +17,7 @@ proc main() =
             runShellCommand(fmt"cd src && nim c -r buildyara.nim {paramStr(2)} && cd ..")
 
         of "-m" :
-            runShellCommand(fmt"cd src && nim c -r virus.nim {paramStr(2)} && cd ..")
+            runShellCommand(fmt"cd src && nim c -r malware.nim {paramStr(2)} && cd ..")
 
         of "-p" : 
             runShellCommand("")

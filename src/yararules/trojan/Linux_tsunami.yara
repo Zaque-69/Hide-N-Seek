@@ -19,3 +19,41 @@ rule Linux_tsunami_trojan_7a60c84f {
     condition : 
         all of them
 }
+
+rule Linux_tsunami_trojan_d313859c { 
+    meta : 
+		creation_date = "02/02/2025"
+        fingerprint = "5C16A02E52D6BB8E49806BD2EE8CE26257888E455C010BB47FA459171F5BA84F"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+        
+        // Attacking
+        $b1 = { 41 74 74 61 63 6B 69 6E 67 }
+
+        // Tsunami heading for
+        $b2 = { 54 73 75 6E 61 6D 69 20 68 65 61 64 69 6E 67 20 66 6F 72 }
+
+        // Killing PID
+        $b3 = { 4B 69 6C 6C 69 6E 67 20 50 49 44 }
+
+    condition : 
+        all of them
+}
+
+rule Linux_tsunami_trojan_38f52e34 { 
+    meta : 
+		creation_date = "03/02/2025"
+        fingerprint = "F7BAE25C4D52E14C772DE1AF0AC57691624255E2BDF832B78594947DCB777395"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+        
+        //  Already 'ning
+        $b1 = { 20 41 6C 72 65 61 64 79 20 27 6E 69 6E 67 }
+
+    condition : 
+        all of them
+}

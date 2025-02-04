@@ -45,3 +45,54 @@ rule Linux_trojan_2da44d9d {
     condition : 
         all of them
 }
+
+rule Linux_trojan_13847901 {
+    meta : 
+		creation_date = "03/02/2025"
+        fingerprint = "EDB7B4D4624DDB3A92B1D8227535E0441FB76149EA319FBDBC018501962C727B"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // unhex
+        $b1 = { 75 6E 68 65 78 }
+
+        // 55505821 -> UPX!
+        $b2 = { 35 35 35 30 35 38 32 31 }
+
+    condition : 
+        all of them
+}
+
+rule Linux_trojan_0d9a34fd {
+    meta : 
+		creation_date = "04/02/2025"
+        fingerprint = "3B9CB1C24432E38709E749BA76F25221AC4EF375665AFBE680BA6CF64307B82E"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // 0iNBe
+        $b1 = { 30 69 4E 42 65 }
+
+    condition : 
+        all of them
+}
+
+rule Linux_trojan_3b74d5dd {
+    meta : 
+		creation_date = "04/02/2025"
+        fingerprint = ""
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // LSD!
+        $b1 = { 4C 53 44 21 }
+
+    condition : 
+        all of them
+}

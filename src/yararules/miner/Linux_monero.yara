@@ -1,8 +1,8 @@
-rule Linux_monero_miner {
+rule Linux_monero_miner_ed5557ed {
     meta : 
 		creation_date = "28/12/2024"
-        update_date = "28/01/2025"
-        fingerprint = ""
+        update_date = "03/02/2025"
+        fingerprint = "68EEEE68BD7795E9CCF56651DB93023B135CA68DABFFB838006E707FCA260A5B"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -40,11 +40,14 @@ rule Linux_monero_miner {
 rule Linux_monero_miner_1eb236 {
     meta : 
 		creation_date = "09/01/2025"
-        fingerprint = "C4849A5270C978534BCC29882F5CFB26BB7D5F17480078E7B4B5F1E74656C3B9"
+        update_date = "03/02/2025"
+        fingerprint = "898741CDBAD0896EC3FAF772A1AA97FC166221CA784D304311BCDDC83D310E14"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
-    strings :         
+    strings : 
+
+        // .....A1...E........A.
         $b1 = { E0 08 C1 ED 10 41 31 C3 89 D8 45 09 D0 C1 E8 10 C1 E3 10 41 C1 }
 
     condition : 
@@ -55,15 +58,49 @@ rule Linux_monero_miner_1eb236 {
 rule Linux_monero_miner_prometei {
     meta : 
 		creation_date = "09/01/2025"
-        fingerprint = "3C54FB5D927067866B60CB86D5109E536E277373F2D5C1474EE4828B0635DA10"
+        update_date = "04/02/2025"
+        fingerprint = "FED9765E4A10540694AACDA3A90E86DE33117D0AB8326228F112244A060004D6"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
     strings : 
 
-        // cgi-bin/prometei.cgi        
+        // cgi-bin/prometei.cgi
         $b1 = { 63 67 69 2D 62 69 6E 2F 70 72 6F 6D 65 74 65 69 2E 63 67 69 }
 
     condition : 
         all of them
+}
+
+rule Linux_monero_miner_0a79399c {
+    meta : 
+		creation_date = "09/01/2025"
+        fingerprint = "F15CF1F8E03A67EA0C0B89A30DC96F5EABB7418FA75149252043896F41375304"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // xmrigMiner
+        $b1 = { 78 6D 72 69 67 4D 69 6E 65 72 }
+
+    condition : 
+        all of them
+}
+
+rule Linux_monero_miner_1ce94d78 {
+    meta : 
+		creation_date = "04/02/2025"
+        fingerprint = "B47263214E0D6349633CE413DEC75067E19B2EFD9005F4F47FB8743EE2245413"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+
+    strings : 
+
+        // xmrig5Pools
+        $b1 = { 78 6D 72 69 67 35 50 6F 6F 6C 73 }
+
+    condition : 
+        all of them
+        and filesize > 700KB
 }

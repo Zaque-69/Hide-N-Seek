@@ -2,9 +2,9 @@
 
 pkgs.mkShell{
   nativeBuildInputs = with pkgs; [
-    bless
     yara
     nim
+    upx
   ];
 
   shellHook = ''

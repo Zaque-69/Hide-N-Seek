@@ -1,8 +1,8 @@
-rule Linux_gafgyt_trojan { 
+rule Linux_gafgyt_trojan_8d5fa5a7 { 
     meta : 
 	    creation_date = "28/12/2024"
-        update_date = "028/01/2025"
-        fingerprint = "8E7995704982AEBD8B244DDE8F58D64A2354644128EEE625F12A11144208498A"
+        update_date = "03/02/2025"
+        fingerprint = "8C375FE32A73D54E1749A61B3672F2F68D513ECE6588EEE47D486A7EA7144A3E"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -17,38 +17,7 @@ rule Linux_gafgyt_trojan {
         // www.google.com
         $b3 = { 77 77 77 06 67 6F 6F 67 6C 65 03 63 6F 6D }
         
-        // USER-AGENT: Google Chrome/60.0.3112.90 Windows
-        $b4 = { 55 53 45 52 2D 41 47 45 4E 54 3A 20 47 6F 6F 67 6C 65 20 43 68 72 6F 6D 65 2F 36 30 2E 30 2E 33 31 31 32 2E 39 30 20 57 69 6E 64 6F 77 73}
-        
-        // algorithm="MD5"
-        $b5 = { 61 6C 67 6F 72 69 74 68 6D 3D 22 4D 44 35 22 }
-        
-        // <NewDownloadURL>$(echo HUAWEIUPNP)</NewDownloadURL>
-        $b6 = { 3C 4E 65 77 44 6F 77 6E 6C 6F 61 64 55 52 4C 3E 24 28 65 63 68 6F 20 48 55 41 57 45 49 55 50 4E 50 29 3C 2F 4E 65 77 44 6F 77 6E 6C 6F 61 64 55 52 4C 3E }
-
-        // wget -g 185.117.119.71
-        $ip1 = { 77 67 65 74 20 2D 67 20 31 38 35 2E 31 31 37 2E 31 31 39 2E 37 31 }
-
     condition :
-        filesize < 1MB 
-        and 3 of ( $b* )
-        and ( $ip1 or true )
-}
-
-rule Linux_gafgyt_trojan_1ea3d { 
-    meta : 
-        creation_date = "28/12/2024"
-        update_date = "28/01/2025"
-        fingerprint = "6E706C1AE572062A8433847E9ACE9085D1736BBC23668D406FF7CAB5C711F391"
-        github = "https://github.com/Zaque-69"
-        os = "Linux"
-
-    strings : 
-
-        // /x38/xFJ/x93/xID/x9A
-        $b1 = { 2F 78 33 38 2F 78 46 4A 2F 78 39 33 2F 78 49 44 2F 78 39 41 }
-
-    condition : 
         filesize < 1MB 
         and all of them
 }
@@ -93,6 +62,38 @@ rule Linux_gafgyt_trojan_4a192a22 {
 
         // proc/self/exe
         $b4 = { 70 72 6F 63 2F 73 65 6C 66 2F 65 78 65 }
+
+    condition : 
+	    all of them
+}
+
+rule Linux_gafgyt_trojan_7d137848 {
+    meta : 
+        creation_date = "04/02/2025"
+        fingerprint = "C28764E2964D9A64EC172CF1887F77C206376F395D25C41AD5DF33CE1B0E3235"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+	
+    strings : 
+
+        // /x38/xFJ/x93/xID/x9A
+        $b1 = { 2F 78 33 38 2F 78 46 4A 2F 78 39 33 2F 78 49 44 2F 78 39 41 }
+
+    condition : 
+	    all of them
+}
+
+rule Linux_gafgyt_trojan_1fbfb250 {
+    meta : 
+        creation_date = "04/02/2025"
+        fingerprint = "A08B24F2193953030A7745A7D8EBF2D26E1F70384FA1E7D34090172A56FE5B38"
+        github = "https://github.com/Zaque-69"
+        os = "Linux"
+	
+    strings : 
+
+        // ..E......t..E.0....E..
+        $b1 = { EC 8B 45 E8 83 E0 02 85 C0 74 07 C7 45 D8 30 00 00 00 8B 45 E8 83 }
 
     condition : 
 	    all of them
