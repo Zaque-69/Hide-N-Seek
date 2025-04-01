@@ -96,3 +96,28 @@ rule Linux_trojan_3b74d5dd {
     condition : 
         all of them
 }
+
+rule Linux_trojan_4cc1f6fc {
+    meta : 
+		creation_date = "01/04/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "6F6969836EBFF60B6C402481BC5D1EB87D3C3599F1E7FC13F3EF3A9EC8ADB2E8"
+        source = "https://bazaar.abuse.ch/download/4cc1f6fcf8afeda5c1529361ac6242777777c0c5fc8d8e32ebf6d49504633cf1/"
+        os = "Linux"
+
+    strings : 
+
+        // :) must be a power of 2
+        $b1 = { 3A 29 20 6D 75 73 74 20 62 65 20 61 20 70 6F 77 65 72 20 6F 66 20 32 }
+
+        // golang.org
+        $b2 = { 67 6F 6C 61 6E 67 2E 6F 72 67 }
+
+        // C:/Users/Administrator/go/pkg/mod/github.com/!puerkito!bio
+        $b3 = { 43 3A 2F 55 73 65 72 73 2F 41 64 6D 69 6E 69 73 74 72 61 74 6F 72 2F 67 6F 2F 70 6B 67 2F 6D 6F 64 2F 67 69 74 68 75 62 2E 63 6F 6D 2F 21 70 75 65 72 6B 69 74 6F 21 62 69 6F }
+
+    condition : 
+        filesize > 3MB
+        and filesize < 7MB
+        and all of them
+}
