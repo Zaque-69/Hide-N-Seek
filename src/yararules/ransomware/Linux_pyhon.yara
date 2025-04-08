@@ -1,8 +1,10 @@
 rule Linux_Python_ransomware {
 	meta : 
 		creation_date = "28/12/2024"
-		fingerprint = "6cd299023fc459e94890033f92c97279fbc592dd2bafdea2b65d183ac063bd41"
+		update_date = "04/04/2025"
 		github = "https://github.com/Zaque-69"
+		fingerprint = "4CE68CDC85FBFBE18E51FBCF960F88F1685EF1E43DB047DFEFDFEAABCCFF2CD9"
+		sample = ""
 		os = "Linux"
 
 	strings:

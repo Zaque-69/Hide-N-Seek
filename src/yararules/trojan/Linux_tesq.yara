@@ -1,9 +1,9 @@
 rule Linux_TSourceEngineQuery_trojan_e50764e4 { 
     meta : 
 		creation_date = "18/12/2024"
-        update_date = "03/02/2025"
-        fingerprint = "BEC64F41AD48AAF8B12A4E4589185D948E0C364B7E311EAF5CE9480855C57D28"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "CCE91619F32018FE8A3DD30EF66267D0C96505EFA800C5BF59F14F082A0DF770"
         os = "Linux"
 
     strings : 

@@ -1,9 +1,10 @@
 rule Linux_monero_miner_ed5557ed {
     meta : 
 		creation_date = "28/12/2024"
-        update_date = "03/02/2025"
-        fingerprint = "68EEEE68BD7795E9CCF56651DB93023B135CA68DABFFB838006E707FCA260A5B"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "8356670798D0D8F2B61ACD3D6F32F222D9D2D54B8A83D98EFDF542A8A5ACA998"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/ed5557ed8c1450c30212bcd9486f2696bd9fc3fb3091e23ef55eff755a063719"
         os = "Linux"
 
     strings : 
@@ -37,12 +38,13 @@ rule Linux_monero_miner_ed5557ed {
         and 4 of ( $b* )  
 }
 
-rule Linux_monero_miner_1eb236 {
+rule Linux_monero_miner_1eb236fc {
     meta : 
 		creation_date = "09/01/2025"
-        update_date = "03/02/2025"
-        fingerprint = "898741CDBAD0896EC3FAF772A1AA97FC166221CA784D304311BCDDC83D310E14"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "26EE8010F8C662C7773FA5DAE69166F0DDB4D2BA65BD1961D40FF2A3E5BA7E6B"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/1eb236fc4728d8048cbbb94dab2215e31877ec7b6533f3720cd2156bc9192d92"
         os = "Linux"
 
     strings : 
@@ -58,9 +60,10 @@ rule Linux_monero_miner_1eb236 {
 rule Linux_monero_miner_prometei {
     meta : 
 		creation_date = "09/01/2025"
-        update_date = "04/02/2025"
-        fingerprint = "FED9765E4A10540694AACDA3A90E86DE33117D0AB8326228F112244A060004D6"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "69B913AC773936D79377BB3B53ADDEDD3892A9FDAB1BF9152E649B3941962A9C"
+        sample = ""
         os = "Linux"
 
     strings : 
@@ -75,8 +78,10 @@ rule Linux_monero_miner_prometei {
 rule Linux_monero_miner_0a79399c {
     meta : 
 		creation_date = "09/01/2025"
-        fingerprint = "F15CF1F8E03A67EA0C0B89A30DC96F5EABB7418FA75149252043896F41375304"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "0456E481B92434E33A69341CDA13EB0A3E171DC98A7A2C1538BF4F59AC477637"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/0a79399c441fca30d20e79fdabdd23ae33f3e16bf9c012cd1492604a03e656bb"
         os = "Linux"
 
     strings : 
@@ -91,8 +96,10 @@ rule Linux_monero_miner_0a79399c {
 rule Linux_monero_miner_1ce94d78 {
     meta : 
 		creation_date = "04/02/2025"
-        fingerprint = "B47263214E0D6349633CE413DEC75067E19B2EFD9005F4F47FB8743EE2245413"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "66A3DB25609187F67CD01291F879159866903179AABEF270EDD67686CCBEDAFA"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/1ce94d788d01ae70782084d5dd48844ecf03629c3aaacff7f4bc35e59d4aaf55"
         os = "Linux"
 
     strings : 

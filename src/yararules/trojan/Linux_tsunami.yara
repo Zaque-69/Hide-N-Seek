@@ -1,8 +1,10 @@
 rule Linux_tsunami_trojan_7a60c84f { 
     meta : 
 		creation_date = "19/01/2025"
-        fingerprint = "F815B359BCF5BE67181D5E0828035CF42E804336C0E734389DAC3DD2EC6D3B8D"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "2A328F48E1FA6337F831B609D8DA41515CDDFF012BCAFCAFF3F78D76AFD43B47"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/7a60c84fb34b2b3cd7eed3ecd6e4a0414f92136af656ed7d4460b8694f2357a7"
         os = "Linux"
 
     strings : 
@@ -23,8 +25,10 @@ rule Linux_tsunami_trojan_7a60c84f {
 rule Linux_tsunami_trojan_d313859c { 
     meta : 
 		creation_date = "02/02/2025"
-        fingerprint = "5C16A02E52D6BB8E49806BD2EE8CE26257888E455C010BB47FA459171F5BA84F"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "F8C9FD68C21E3D6294F97F66A83F05623E6A5A4AC3D71E749B4B1F119998C8D2"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/d313859c242add69d6534f497a256607cf9611fadf06868a1e499c50556e3d3a"
         os = "Linux"
 
     strings : 
@@ -45,8 +49,10 @@ rule Linux_tsunami_trojan_d313859c {
 rule Linux_tsunami_trojan_38f52e34 { 
     meta : 
 		creation_date = "03/02/2025"
-        fingerprint = "F7BAE25C4D52E14C772DE1AF0AC57691624255E2BDF832B78594947DCB777395"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "86D3B2184827BBB5BC793F9388F95B21262E15B7E5EAF214938D261E4A19B446"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/38f52e34fe24e135b06a892db7864ab1921567d285e7f6aaa4c0e6b60e1f345e"
         os = "Linux"
 
     strings : 
@@ -55,5 +61,6 @@ rule Linux_tsunami_trojan_38f52e34 {
         $b1 = { 20 41 6C 72 65 61 64 79 20 27 6E 69 6E 67 }
 
     condition : 
-        all of them
+        filesize > 20KB
+        and all of them
 }

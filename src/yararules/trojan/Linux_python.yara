@@ -1,9 +1,10 @@
 rule Linux_python_trojan_ed077ecc { 
     meta : 
 		creation_date = "27/10/2024"
-        update_date = "09/01/2025"
-        fingerprint = "8077FD69CB3EAFE0238D184CF859B89B36FC88D6554EED8A51EF69109FE9CDBD"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "E39A91EC5567ED13DADC217F4EFE02B32208710FEA5B467B95B75D6FABD5EEDC"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/ed077ecceeb2c851f45a095df2cc33c54b4ac17f03a28d1d9696a819de827e20"
         os = "Linux"
 
     strings : 
@@ -18,15 +19,17 @@ rule Linux_python_trojan_ed077ecc {
         $b3 = { 43 6F 75 6C 64 20 6E 6F 74 20 72 65 61 64 20 66 72 6F 6D 20 66 69 6C 65 }
 
     condition : 
-        all of them
+        filesize > 2MB
+        and all of them
 }
 
 rule Linux_python_trojan_03bb1cfd { 
     meta : 
 		creation_date = "27/10/2024"
-        update_date = "09/01/2025"
-        fingerprint = "A5F6C96E2246669B046B539D9E4FC806A8F87FA46E6619EB438A14DA37B49A6E"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "39AE51F9270F668C3C3759F20DA3BE7C33FA305D0E542C2BE36E304DCCBC5908"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/03bb1cfd9e45844701aabc549f530d56f162150494b629ca19d83c1c696710d7"
         os = "Linux"
 
     strings : 
@@ -35,15 +38,17 @@ rule Linux_python_trojan_03bb1cfd {
         $b1 = { 43 61 6E 6E 6F 74 20 64 6C 73 79 6D 20 66 6F 72 20 50 79 5F }
 
     condition : 
-        all of them
-        and filesize > 1MB
+        filesize > 1MB
+        and all of them
 }
 
 rule Linux_python_trojan_3993bc5c { 
     meta : 
 		creation_date = "28/01/2025"
-        fingerprint = "55DE2949C2FDDFDA8303B36654D25C9EEEC7CC250F20ADC9280EC7D3F55F0963"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "B9177EBAFA5AD9830DEC3D4ED613ED32993A651818F895DF5BAB5C9EFBF444BD"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/3993bc5c3cdfe470fab6f6b932a7e741630f0212a7f18249a61123e3b324edef"
         os = "Linux"
 
     strings : 

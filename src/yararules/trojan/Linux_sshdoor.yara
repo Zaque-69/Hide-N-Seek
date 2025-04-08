@@ -1,9 +1,10 @@
 rule Linux_sshdoor_trojan_6de1e587 {
     meta : 
 		creation_date = "18/01/2025"
-        update_date = "28/01/2025"
-        fingerprint = "6D89CE6B6C875F83E410B221C968589CA452C56B8877E75ED3DF0561EA4303AE"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "91CEAA0EA6680E9994E5A96F649D8FC4AEF7F06BA2382A03C4193C9DE1C34BEF"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/6de1e587ac4aa49273042ffb3cdce5b92b86c31c9f85ca48dae8a38243515f75"
         os = "Linux"
 
     strings : 

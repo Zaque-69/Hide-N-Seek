@@ -1,8 +1,10 @@
 rule Linux_hacktool_e0367097 {
     meta : 
 		creation_date = "28/01/2025"
-        fingerprint = "F647965EA3FE6CD431DA62412CB873DE61F93B2E405CAEFB470C4942ECD04852"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "E67CA25AC0BB620E4D96E4CF5FFCC48E8C2F298FB44E516961068538C04267D3"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/e0367097a1450c70177bbc97f315cbb2dcb41eb1dc052f522c9e8869e084bd0f"
         os = "Linux"
 
     strings : 

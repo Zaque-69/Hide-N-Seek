@@ -1,9 +1,10 @@
 rule Linux_bitcoin_miner { 
     meta : 
 		creation_date = "28/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "C9527DC047EED07AAE046F79CEDA09A791F8EDBE0925C66B9409D3B1E16BED62"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "3769DE000F428AABCF3C622132F5F07213501A2CD4C7198329DECE1CB6148A2F"
+        sample = ""
         os = "Linux"
 
     strings : 

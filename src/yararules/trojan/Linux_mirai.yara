@@ -1,9 +1,10 @@
 rule Linux_mirai_trojan { 
     meta : 
 		creation_date = "29/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "8A5771A3FF2A167465DF75BCEB004E1742E69C7BD969A50BAE498F498C8AF8ED"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "A401A34F44C62B7CBDD3940DB2F17D52FFDB68A9AE13A931B4DCA949DB854719"
+        sample = ""
         os = "Linux"
 
     strings : 
@@ -21,9 +22,10 @@ rule Linux_mirai_trojan {
 rule Linux_mirai_trojan_pastebin { 
     meta : 
 		creation_date = "29/12/2024"
-        update_date = "09/01/2025"
-        fingerprint = "DCFB8DDC3690BC6FF63F47C9C97F34ABDE409E490A0E7496875CE897A5CA5594"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "26A1B4FB9A1845A6C1D827A23EEE955A4B4FF646361F222167A8E261052B8358"
+        sample = ""
         os = "Linux"
 
     strings : 
@@ -41,8 +43,10 @@ rule Linux_mirai_trojan_pastebin {
 rule Linux_mirai_trojan_9e35f0a9 { 
     meta : 
 		creation_date = "02/02/2025"
-        fingerprint = "FD67E5F06AF67D26C184AA0A5B773A6D674C5CD591B2E6A142BF39CE041282C2"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "682721804BF900FFCF85E47879C6CF6AD6683D037CEB34DC9141E73908BDE0D7"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/9e35f0a9eef0b597432cb8a7dfbd7ce16f657e7a74c26f7a91d81b998d00b24d"
         os = "Linux"
 
     strings : 
@@ -54,14 +58,17 @@ rule Linux_mirai_trojan_9e35f0a9 {
         $b2 = { 54 43 50 }
 
     condition : 
-        all of them
+        filesize > 20KB
+        and all of them
 }
 
 rule Linux_mirai_trojan_0a4b4171 { 
     meta : 
 		creation_date = "04/02/2025"
-        fingerprint = ""
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "16D6D42F109A4DCA07D18506C91E0381CB70AF3C73C353351ED59868D122FB40"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/0a4b417193f63a3cce4550e363548384eb007f89e89eb831cf1b7f5ddf230a51"
         os = "Linux"
 
     strings : 
@@ -73,5 +80,6 @@ rule Linux_mirai_trojan_0a4b4171 {
         $b2 = { 73 65 71 75 65 6E 39 44 }
 
     condition : 
-        all of them
+        filesize > 50KB
+        and all of them
 }

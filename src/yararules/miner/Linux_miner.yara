@@ -1,9 +1,10 @@
 rule Linux_miner_3ff6b428 {
     meta : 
 		creation_date = "28/12/2024"
-        update_date = "03/02/2025"
-        fingerprint = "C6C8C412443CAA4F9607AF0A17C03C63BEA084FCB9CD4FC0F624BA7D15E458E5"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "5983F39960604FFE7EC05829A16AF74834024FB9588C4DD40575F87AE3ED6629"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/3ff6b4287e49a01724626a9e11adceee7a478aa5e5778ec139a3f9011a02f3af"
         os = "Linux"
 
     strings : 
@@ -25,8 +26,10 @@ rule Linux_miner_3ff6b428 {
 rule Linux_miner_5c03ff30 { 
     meta : 
 		creation_date = "11/01/2025"
-        fingerprint = "772486CD7FAF27497CF57CA3916DC8794EEC8668F41A39E776FFCB4DB0691D14"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "F379A9339C56B9B7CCDE55F6FDC64DF167465888F7AB5AFC30AB7EC1857B3896"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/5c03ff30ccffc9d36c342510c7469682d3c411654ec52b0930d37a6c6aab9f72"
         os = "Linux"
 
     strings : 
@@ -35,17 +38,17 @@ rule Linux_miner_5c03ff30 {
         $b1 = { 63 6F 69 6E 20 69 73 20 6E 6F 74 20 76 61 6C 69 64 }
 
     condition :  
-        all of them
-        and filesize > 2MB
+        filesize > 2MB
+        and all of them
 }
-
 
 rule Linux_miner_4c38654e { 
     meta : 
 		creation_date = "17/01/2025"
-        update_date = "28/01/2025"
-        fingerprint = "EDF9E44BE81F87B1DF0F888FC39619A4D2A20F6A19A1E6D9C62D942E3FBDA577"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "F71E2A8900E440C9129AA6829E2C38B50DCAA27D6FA5A758BC58B8543760F697"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/4c38654e08bd8d4c2211c5f0be417a77759bf945b0de45eb3581a2beb9226a29"
         os = "Linux"
 
     strings : 

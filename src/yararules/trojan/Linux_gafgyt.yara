@@ -1,9 +1,10 @@
 rule Linux_gafgyt_trojan_8d5fa5a7 { 
     meta : 
 	    creation_date = "28/12/2024"
-        update_date = "03/02/2025"
-        fingerprint = "8C375FE32A73D54E1749A61B3672F2F68D513ECE6588EEE47D486A7EA7144A3E"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "A89A3BCA46EB189D692EE251384EFB67F06A53FA688605033B621637D32AA3B6"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/8d5fa5a775f4fb0faf7d01d0553aadab4cebab91e53f933c83509b5b506779d3"
         os = "Linux"
 
     strings : 
@@ -25,8 +26,10 @@ rule Linux_gafgyt_trojan_8d5fa5a7 {
 rule Linux_gafgyt_trojan_3dcad97c { 
     meta : 
 	    creation_date = "11/01/2025"
-        fingerprint = "FF6A569D2A38DC79D1B709FE19DCCCED043900D295C48E1D6F0316090C97E333"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "8C7D3665CFF56A92DE41C513EDCEEE67D5C3C8AE7EEB56A8004E5B3D4D4F6AA8"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/3dcad97c6bc823158aa8de7ab177af8c430bb20acd1f9d4e12444c482d0edd1d"
         os = "Linux"
 
     strings : 
@@ -44,9 +47,10 @@ rule Linux_gafgyt_trojan_3dcad97c {
 rule Linux_gafgyt_trojan_4a192a22 {
     meta : 
         creation_date = "16/01/2025"
-        update_date = "28/01/2025"
-        fingerprint = "EFA3E52672729D91CD3E80AC244FAC8FCF731671A4C6853E6B03E6BF53E58097"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "505781D6684F9F987912955F76EBB72FF53F0A8815AA11DDE2145E341D542644"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/4a192a222de58048d9fdfe160d2cec8723b50785903f9e2e9aee122fccf15e10"
         os = "Linux"
 	
     strings : 
@@ -70,8 +74,10 @@ rule Linux_gafgyt_trojan_4a192a22 {
 rule Linux_gafgyt_trojan_7d137848 {
     meta : 
         creation_date = "04/02/2025"
-        fingerprint = "C28764E2964D9A64EC172CF1887F77C206376F395D25C41AD5DF33CE1B0E3235"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "A3B57138D2D8FBD64586575CD4A0ECB94BA5FDA3E3A3B9D0A4EA08D417106221"
+        sample = ""
         os = "Linux"
 	
     strings : 
@@ -86,8 +92,10 @@ rule Linux_gafgyt_trojan_7d137848 {
 rule Linux_gafgyt_trojan_1fbfb250 {
     meta : 
         creation_date = "04/02/2025"
-        fingerprint = "A08B24F2193953030A7745A7D8EBF2D26E1F70384FA1E7D34090172A56FE5B38"
+        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
+        fingerprint = "C34224482EDD410D7E41ED5590FA7D2BA663282260F9DA17A88ACAC1283BE1E6"
+        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/1fbfb2501ebe6e653d5e1e53b19f49eabbb34ed350615140097704539faacd0b"
         os = "Linux"
 	
     strings : 
