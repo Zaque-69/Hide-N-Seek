@@ -26,9 +26,9 @@ rule Linux_gafgyt_trojan_8d5fa5a7 {
 rule Linux_gafgyt_trojan_3dcad97c { 
     meta : 
 	    creation_date = "11/01/2025"
-        update_date = "04/04/2025"
+        update_date = "10/04/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "8C7D3665CFF56A92DE41C513EDCEEE67D5C3C8AE7EEB56A8004E5B3D4D4F6AA8"
+        fingerprint = "FF014274F142FA9F8F551AE6C202CE19D4DBBEC0C8D1D9EC6942E654805FCF25"
         sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/3dcad97c6bc823158aa8de7ab177af8c430bb20acd1f9d4e12444c482d0edd1d"
         os = "Linux"
 
@@ -41,7 +41,9 @@ rule Linux_gafgyt_trojan_3dcad97c {
         $b2 = { 2F 78 32 30 2F 78 33 43 2F 78 33 33 2F 78 32 30 2F 78 35 30 2F 78 36 31 2F 78 33 32 2F 78 37 32 2F 78 34 33 2F 78 34 38 2F 78 32 30 2F 78 34 44 2F 78 33 32 2F 78 32 30 2F 78 34 31 2F 78 33 34 2F 78 33 34 2F 78 37 32 2F 78 34 33 2F 78 34 }
 
     condition : 
-        all of them
+        filesize > 75KB
+        and filesize < 200KB
+        and all of them
 }
 
 rule Linux_gafgyt_trojan_4a192a22 {

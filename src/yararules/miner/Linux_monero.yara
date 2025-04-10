@@ -96,9 +96,9 @@ rule Linux_monero_miner_0a79399c {
 rule Linux_monero_miner_1ce94d78 {
     meta : 
 		creation_date = "04/02/2025"
-        update_date = "04/04/2025"
+        update_date = "10/04/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "66A3DB25609187F67CD01291F879159866903179AABEF270EDD67686CCBEDAFA"
+        fingerprint = "51B95E36507565456C2EBA590D49A805F09B18C2F67C9E10AEF203D24DD61F98"
         sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/1ce94d788d01ae70782084d5dd48844ecf03629c3aaacff7f4bc35e59d4aaf55"
         os = "Linux"
 
@@ -108,6 +108,41 @@ rule Linux_monero_miner_1ce94d78 {
         $b1 = { 78 6D 72 69 67 35 50 6F 6F 6C 73 }
 
     condition : 
-        all of them
-        and filesize > 700KB
+        filesize > 700KB
+        and all of them
+}
+
+rule Linux_monero_miner_99296550 {
+    meta : 
+		creation_date = "10/04/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "C14987F31964ADCE12A7C923737D6B6058BF5BCE1B196B88849CC93502C0F75A"
+        sample = "https://bazaar.abuse.ch/download/99296550ab836f29ab7b45f18f1a1cb17a102bb81cad83561f615f3a707887d7/"
+        os = "Linux"
+
+    strings : 
+        
+        // if ! sudo
+        $s1 = { 69 66 20 21 20 73 75 64 6F }
+
+        // WALLET_BASE
+        $b1 = { 57 41 4C 4C 45 54 5F 42 41 53 45 }
+
+        // ERROR: Wrong wallet
+        $b2 = { 45 52 52 4F 52 3A 20 57 72 6F 6E 67 20 77 61 6C 6C 65 74 }
+
+        // EXP_MONERO_HASHRATE
+        $b3 = { 45 58 50 5F 4D 4F 4E 45 52 4F 5F 48 41 53 48 52 41 54 45 }
+
+        // Mining in background 
+        $b4 = { 4D 69 6E 69 6E 67 20 69 6E 20 62 61 63 6B 67 72 6F 75 6E 64 }
+
+        // c3pool_miner.service
+        $b5 = { 63 33 70 6F 6F 6C 5F 6D 69 6E 65 72 2E 73 65 72 76 69 63 65 }
+
+    condition : 
+        filesize > 10KB
+        and filesize < 20KB
+        and all of ( $s* )
+        and 3 of ( $b* )
 }
