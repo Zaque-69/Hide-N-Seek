@@ -64,3 +64,24 @@ rule Linux_tsunami_trojan_38f52e34 {
         filesize > 20KB
         and all of them
 }
+
+rule Linux_tsunami_trojan_6c6888a7 { 
+    meta : 
+		creation_date = "29/04/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "6B2972CDB1B35EC816C9DC6F551461F488E606DD5221CB3FA5FCB2FD57C8A563"
+        sample = "https://bazaar.abuse.ch/download/6c6888a75d6a62dc7414dd22d0b6a70456a108a14889b8406f7aeb8b61b34633/"
+        os = "Linux"
+
+    strings : 
+        
+        //  I'm having a problem resolving my host
+        $b1 = { 49 27 6D 20 68 61 76 69 6E 67 20 61 20 70 72 6F 62 6C 65 6D 20 72 65 73 6F 6C 76 69 6E 67 20 6D 79 20 68 6F 73 74 }
+
+        // memory of David Bowie
+        $b2 = { 6D 65 6D 6F 72 79 20 6F 66 20 44 61 76 69 64 20 42 6F 77 69 65 }
+
+    condition : 
+        filesize > 50KB
+        and all of them
+}

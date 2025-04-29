@@ -24,3 +24,30 @@ rule Linux_shell_69f4dcd1 {
         filesize < 10KB
         and all of them
 }
+
+rule Linux_shell_e5d316eb {
+    meta : 
+		creation_date = "29/04/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "FA60D47B724A06FD8A35A886E2ACC2C07EEF0D3924B12F5838948D2CD10FA732"
+        sample = "https://bazaar.abuse.ch/download/e5d316ebc47a527fd923fde8eeeca8cfb320232df361e7db5fa5984f69080030/"
+        os = "Linux"
+
+    strings : 
+        
+        // cp /bin/busybox /tmp/
+        $b1 = { 63 70 20 2F 62 69 6E 2F 62 75 73 79 62 6F 78 20 2F 74 6D 70 2F }
+
+        // ulimit -n 1024
+        $b2 = { 75 6C 69 6D 69 74 20 2D 6E 20 31 30 32 34 }
+
+        // ftpget -v -u anonymous
+        $b3 = { 66 74 70 67 65 74 20 2D 76 20 2D 75 20 61 6E 6F 6E 79 6D 6F 75 73 }
+
+        // 193.228.91.123
+        $b4 = { 31 39 33 2E 32 32 38 2E 39 31 2E 31 32 33 }
+
+    condition : 
+        filesize < 10KB
+        and all of them
+}
