@@ -88,8 +88,8 @@ rule Linux_mirai_trojan_cfe32f28 {
     meta : 
 		creation_date = "06/05/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "5B4BD851ABF049D1C5AA6278CE2F164F571ADAE716590A5BB6C2B40F6EF653F1"
-        sample = "https://bazaar.abuse.ch/download/cfe32f284a48e53fbc44ce570f4d1846b704a095f8fb05abe1fae4cdbf3522ba/"
+        fingerprint = "937842AB8CFC24E2B0F86F3E0796C65968523D1A72F46C96A46F9E0AD9A6AFCE"
+        sample = "https://bazaar.abuse.ch/download/cfe32f284a48e53fbc44ce570f4d1846b704a095f8fb05abe1fae4cdbf3522ba"
         os = "Linux"
 
     strings : 
@@ -123,8 +123,8 @@ rule Linux_mirai_trojan_90afe3be {
     meta : 
 		creation_date = "06/05/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "9FBD083ACEFC0F9CB7CDB1D80A8F018EC9B9378FF68C0A95AAB339C74DF1E05B"
-        sample = "https://bazaar.abuse.ch/download/90afe3be00cc6cc67a460ff5e50a5dc86f796350df367cd6732c3c19448a6dd5/"
+        fingerprint = "7578903A2541F2DF1986B9A153D18F4F051074BA6F3C6F1A802DEB7772F38B45"
+        sample = "https://bazaar.abuse.ch/download/90afe3be00cc6cc67a460ff5e50a5dc86f796350df367cd6732c3c19448a6dd5"
         os = "Linux"
 
     strings : 
@@ -143,5 +143,29 @@ rule Linux_mirai_trojan_90afe3be {
 
     condition : 
         filesize < 100KB
+        and all of them
+}
+
+rule Linux_mirai_trojan_e0a9f423 { 
+    meta : 
+		creation_date = "10/05/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "5433E5B340055AE4C1E8BD38207903BC1F788AF5A6EC2F340D4D39F9A935BE2F"
+        sample = "https://bazaar.abuse.ch/download/e0a9f4237e18df37e9849955d8929262b55dc58a9b676069713f4da1a5d1c1ab"
+        os = "Linux"
+
+    strings : 
+        
+        // 193.32.162.74
+        $b1 = { 31 39 33 2E 33 32 2E 31 36 32 2E 37 34 }
+
+        // jaskvejca<<<
+        $b2 = { 6A 61 73 6B 76 65 6A 63 61 3C 3C 3C }
+
+        // atmgvkqpav
+        $b3 = { 61 74 6D 67 76 6B 71 70 61 76 }
+
+    condition : 
+        filesize < 200KB
         and all of them
 }

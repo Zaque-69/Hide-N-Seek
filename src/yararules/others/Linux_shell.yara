@@ -2,7 +2,7 @@ rule Linux_shell_69f4dcd1 {
     meta : 
 		creation_date = "10/04/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "F0268C8F51F0E6995B15513F079A63DD8CF5398A39DBABE14CC43A5E30887B97"
+        fingerprint = ""
         sample = "https://bazaar.abuse.ch/download/69f4dcd1de05fc553781e737e85bdae5f0e79e7f34ded1899d60630e54d43fe4/"
         os = "Linux"
 
@@ -29,8 +29,8 @@ rule Linux_shell_e5d316eb {
     meta : 
 		creation_date = "29/04/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "FA60D47B724A06FD8A35A886E2ACC2C07EEF0D3924B12F5838948D2CD10FA732"
-        sample = "https://bazaar.abuse.ch/download/e5d316ebc47a527fd923fde8eeeca8cfb320232df361e7db5fa5984f69080030/"
+        fingerprint = "F0268C8F51F0E6995B15513F079A63DD8CF5398A39DBABE14CC43A5E30887B97"
+        sample = "https://bazaar.abuse.ch/download/e5d316ebc47a527fd923fde8eeeca8cfb320232df361e7db5fa5984f69080030"
         os = "Linux"
 
     strings : 
@@ -46,6 +46,30 @@ rule Linux_shell_e5d316eb {
 
         // 193.228.91.123
         $b4 = { 31 39 33 2E 32 32 38 2E 39 31 2E 31 32 33 }
+
+    condition : 
+        filesize < 10KB
+        and all of them
+}
+
+rule Linux_shell_e244ecda {
+    meta : 
+		creation_date = "10/05/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "B55CE630941C65BC61427C3D3A6AFE199A466162F7BB1C93653760C0BAE68D7A"
+        sample = "https://bazaar.abuse.ch/download/e244ecda6b325a3c8b087ed731e93b42b295e6b7f91e7cec3649fb2d807263d3"
+        os = "Linux"
+
+    strings : 
+        
+        // wget http://81.17.16.122
+        $b1 = { 77 67 65 74 20 68 74 74 70 3A 2F 2F 38 31 2E 31 37 2E 31 36 2E 31 32 32 }
+
+        // curl -O http://81.17.16.122
+        $b2 = { 63 75 72 6C 20 2D 4F 20 68 74 74 70 3A 2F 2F 38 31 2E 31 37 2E 31 36 2E 31 32 32 }
+
+        // s84j93nd3ht03w33dt
+        $b3 = { 73 38 34 6A 39 33 6E 64 33 68 74 30 33 77 33 33 64 74 }
 
     condition : 
         filesize < 10KB
