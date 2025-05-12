@@ -1,7 +1,7 @@
-rule Linux_miner_upx { 
+rule Linux_UPX { 
     meta : 
 		creation_date = "03/02/2024"
-        fingerprint = ""
+        fingerprint = "E8B7029401714CED0A0599B2E9D8C79E5B96D60BB28BAB5465CEFC427C0AF3A9"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 

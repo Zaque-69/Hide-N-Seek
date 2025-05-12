@@ -21,3 +21,9 @@ proc runShellCommand *( command : string ) : void =
     
     discard execCmd(command)
 
+proc runCommandSequence * (commands: seq[string]) : void =
+    # Running shell comands from a sequence
+
+    for command in commands:
+        echo command
+        discard execCmdEx(command)
