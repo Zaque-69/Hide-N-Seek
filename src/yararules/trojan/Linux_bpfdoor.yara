@@ -1,8 +1,9 @@
 rule Linux_bpfdoor_trojan {
     meta : 
 		creation_date = "10/05/2025"
+        update_date = "16/05/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "9BDFDF3619807BA30CD90DF5BDE8056964D7B2F8FC3193F4E965FD7363B3E46B"
+        fingerprint = "41D52AFDD7A8085C9EF20F260984604731F36B9CE7FC1367219F4C73E85B5430"
         samples = "https://bazaar.abuse.ch/browse/tag/bpfdoor/"
         os = "Linux"
 
@@ -45,7 +46,7 @@ rule Linux_bpfdoor_trojan {
         $b12 = { 64 6F 65 73 20 6E 6F 74 20 6D 61 74 63 68 20 74 68 65 20 70 75 62 6C 69 63 20 63 65 72 74 69 66 69 63 61 74 65 }
 
     condition : 
-        ( filesize < 100KB )
-        or ( filesize < 3MB )
+        (( filesize > 10KB and filesize < 40KB )
+        or ( filesize > 2MB ))
         and 6 of them
 }
