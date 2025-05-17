@@ -7,7 +7,7 @@ proc echoWarning * ( file, positiveRule : string ) : void =
     echo positiveRule, " ", file
 
 proc hasExtensionChanged * ( path : string ) : void = 
-    echo fmt"[!] EXT : {path} has extension changed!"
+    echo fmt"{path} has extension changed!"
 
 proc runShellCommand *( command : string ) : void = 
     # Running a shell comand

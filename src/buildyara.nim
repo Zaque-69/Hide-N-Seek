@@ -76,7 +76,7 @@ proc checkExtensionChanged( path : string, rulesFound : seq[string], extensionsF
         
         for ext in extensionsFound : 
           if seqContent.len > 0 : 
-            if ( contains(seqContent[0], ext) and not contains(seqContent[1], ext) ) or ( not contains(seqContent[0], ext) and contains(seqContent[1], ext) ) : 
+            if ( contains(seqContent[0], ext) and not contains(seqContent[1], ext) ) and ( not contains(seqContent[0], ext) and contains(seqContent[1], ext) ) :
               hasExtensionChanged(file.path)
 
           else : 

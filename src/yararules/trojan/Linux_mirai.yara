@@ -169,3 +169,30 @@ rule Linux_mirai_trojan_e0a9f423 {
         filesize < 200KB
         and all of them
 }
+
+rule Linux_mirai_trojan_320dbdaa { 
+    meta : 
+		creation_date = "16/05/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "2A677C711A73EF038BC2B77CCA96C281388CFCB7CF19D716B17E991A5AE3A43B"
+        sample = "https://bazaar.abuse.ch/download/320dbdaaaa512c548867ea08ac354ab7479796fc57a741afecabaa2a0d9dbd35"
+        os = "Linux"
+
+    strings : 
+        
+        // "HuaweiHomeGateway"
+        $b1 = { 22 48 75 61 77 65 69 48 6F 6D 65 47 61 74 65 77 61 79 22 }
+
+        // wget -g 89.42.88.163
+        $b2 = { 77 67 65 74 20 2D 67 20 38 39 2E 34 32 2E 38 38 2E 31 36 33 }
+
+        // hiroshima
+        $b3 = { 68 69 72 6F 73 68 69 6D 61 }
+
+        // huawei
+        $b4 = { 68 75 61 77 65 69 }
+
+    condition : 
+        filesize > 50KB
+        and all of them
+}

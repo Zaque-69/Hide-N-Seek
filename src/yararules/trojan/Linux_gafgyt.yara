@@ -46,33 +46,6 @@ rule Linux_gafgyt_trojan_3dcad97c {
         and all of them
 }
 
-rule Linux_gafgyt_trojan_4a192a22 {
-    meta : 
-        creation_date = "16/01/2025"
-        update_date = "04/04/2025"
-        github = "https://github.com/Zaque-69"
-        fingerprint = "505781D6684F9F987912955F76EBB72FF53F0A8815AA11DDE2145E341D542644"
-        sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/4a192a222de58048d9fdfe160d2cec8723b50785903f9e2e9aee122fccf15e10"
-        os = "Linux"
-	
-    strings : 
-
-        // PROT_EXEC
-        $b1 = { 50 52 4F 54 5F 45 58 45 }
-
-        // PROT_WRITE
-        $b2 = { 50 52 4F 54 5F 57 52 49 54 45 }
-
-        // failed
-        $b3 = { 66 61 69 6C 65 64 }
-
-        // proc/self/exe
-        $b4 = { 70 72 6F 63 2F 73 65 6C 66 2F 65 78 65 }
-
-    condition : 
-	    all of them
-}
-
 rule Linux_gafgyt_trojan_7d137848 {
     meta : 
         creation_date = "04/02/2025"

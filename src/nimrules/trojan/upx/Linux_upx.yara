@@ -1,7 +1,8 @@
 rule Linux_UPX { 
     meta : 
 		creation_date = "03/02/2024"
-        fingerprint = "E8B7029401714CED0A0599B2E9D8C79E5B96D60BB28BAB5465CEFC427C0AF3A9"
+        update_date = "17/05/2025"
+        fingerprint = "084199D431D9EB0780F623C7F734C572020CE387A2FFE78658BE87DA26F07379"
         github = "https://github.com/Zaque-69"
         os = "Linux"
 
@@ -19,6 +20,10 @@ rule Linux_UPX {
         //  UPX Team
         $b4 = { 20 55 50 58 20 54 65 61 6D }
 
+        // .UPX!
+        $header1 = { 83 55 50 58 21 }
+
     condition :  
-        3 of ( $b* )
+        ( 3 of ( $b* ) )
+        or ( any of ( $header* ) )
 }

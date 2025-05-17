@@ -30,8 +30,19 @@ proc decompileUpxCopiedFiles() : void =
     for file in walkDir("files/upx") :
         runShellCommand(fmt"upx -d {file.path}")
 
+# Replacing the compressed viruses with the decompressed ones
+proc replaceFinalVirus(path : string) : void =
+    var copy_path = path
+
+    if not copy_path.endsWith("/"):
+        copy_path = copy_path & "/"
+
+    for file in walkDir("files/upx") :
+        runShellCommand(fmt"rm {copy_path}{extractFilename(file.path)} && mv {file.path} {copy_path}")
+
 proc scanFilesUpx * ( path : string ) : void =
     refreshOutputFiles() 
     runYaraRuleForUpx(path)
     copyUpxFiles(path)
     decompileUpxCopiedFiles()
+    replaceFinalVirus(path)
