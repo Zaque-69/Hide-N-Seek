@@ -27,9 +27,11 @@ class HideNSeek(ctk.CTk):
         self.create_widgets()
 
     def create_widgets(self):
-        # Creare label titlu
         self.label_titlu = ctk.CTkLabel(self, text = "Hide 'N Seek", font = ctk.CTkFont(size = 20, weight = "bold"))
         self.label_titlu.place(x = 30, y = 20)
+
+        self.name = ctk.CTkLabel(self, text = "Zamfir Andrei Constantin\n Colegiul National Nichita Stanescu\nclasa a 11a - sectiune Utilitar\n\ngithub.com/Zaque-69/Hide-N-Seek", font = ctk.CTkFont(size = 8, weight = "bold"))
+        self.name.place(x = 730, y = 450)
 
         self.frame_input = ctk.CTkFrame(self)
         self.frame_input.place(x = 30, y = 60)
@@ -69,16 +71,16 @@ class HideNSeek(ctk.CTk):
         self.clear_button.place(x = 508, y = 60)
 
         quick_img = CTkImage(dark_image = Image.open("./assets/quickscan.png"), size = (100, 100))
-        self.qs_button = ctk.CTkButton(self, width = 130, height = 130, image = quick_img, text = "", command = self.quick_scan,
+        self.qs_button = ctk.CTkButton(self, width = 130, height = 160, image = quick_img, text = "", command = self.quick_scan,
             fg_color = TEXTBOX_COLOR, border_width = 2, border_color = BORDER_BUTTON_COLOR,
             hover_color = HOVER_TEXTBOX_COLOR, corner_radius = 4)
-        self.qs_button.place(x = 740, y = 20)
+        self.qs_button.place(x = 740, y = 80)
 
         ext_img = CTkImage(dark_image = Image.open("./assets/file.png"), size = (100, 100))
-        self.ext_button = ctk.CTkButton(self, width = 130, height = 130, image = ext_img, text = "", command = self.extension_check,
+        self.ext_button = ctk.CTkButton(self, width = 130, height = 160, image = ext_img, text = "", command = self.extension_check,
             fg_color = TEXTBOX_COLOR, border_width = 2, border_color = BORDER_BUTTON_COLOR,
             hover_color = HOVER_TEXTBOX_COLOR, corner_radius = 4)
-        self.ext_button.place(x = 740, y = 180)
+        self.ext_button.place(x = 740, y = 260)
 
         trash_img = CTkImage(dark_image = Image.open("./assets/trash.png"), size = (25, 25))
         self.trash_button = ctk.CTkButton(self, width = 35, height = 35, image = trash_img, text = "", command = self.delete_content,
@@ -89,7 +91,7 @@ class HideNSeek(ctk.CTk):
         self.separator = ctk.CTkFrame(self, width = 2, height = 530, fg_color = TEXTBOX_COLOR)
         self.separator.place(x = 720, y = 0)
 
-        self.delete = ctk.CTkEntry(self, width = 615, height = 35, placeholder_text = "Path to delete file/folder.")
+        self.delete = ctk.CTkEntry(self, width = 615, height = 35, placeholder_text = "Path to delete file.")
         self.delete.place(x = 30, y = 480)
 
     def browse_folder(self):
@@ -101,6 +103,8 @@ class HideNSeek(ctk.CTk):
     def clear_textboxes(self):
         self.output_textbox_yararules.delete("1.0", "end")
         self.output_textbox_scannedfiles.delete("1.0", "end")
+        self.output_textbox_files.delete("1.0", "end")
+        self.output_textbox_virus.delete("1.0", "end")
 
     def run_scan(self, option, path):
         try:
@@ -130,10 +134,15 @@ class HideNSeek(ctk.CTk):
     def insert_clean_files(self, path, infected_list):
         all_files = self.files_rec(path)
         infected_files = []
+
         for line in infected_list:
             parts = line.split()
             if len(parts) > 1:
-                infected_files.append(parts[1])
+                if len(parts) < 3 : 
+                    infected_files.append(parts[1])
+                else : 
+                    infected_files.append(parts[0])
+        
         for file in all_files:
             if file not in infected_files:
                 self.output_textbox_scannedfiles.insert("end", "[✓] OK " + file + "\n")
@@ -148,28 +157,32 @@ class HideNSeek(ctk.CTk):
                 else:
                     total = total + 1
         except Exception as e:
-            pass
+            messagebox.showerror("ERROR", e)
         return total
 
-    def start_scan(self):
-        path = self.entry_path.get()
-        output = self.run_scan("-m", path)
-        self.output_textbox_yararules.delete("1.0", "end")
+    def delete_content(self):
+        path = self.delete.get()
 
-        for line in output:
-            self.output_textbox_yararules.insert("end", line + "\n")
+        os.system(f"rm {path}")
+        messagebox.showinfo("INFO", "Deleted successfully")
 
-        self.output_textbox_files.delete("1.0", "end")
-        self.output_textbox_files.insert("end", str(self.count_files(path)))
-        self.insert_clean_files(path, output)
+    def number_of_viruses(self, keyword):
+        content = self.output_textbox_yararules.get("1.0", "end")
+        return content.count(keyword)
 
     def quick_scan(self):
-        paths = [os.path.expanduser("~/Desktop/python"), os.path.expanduser("~/Downloads")]
+        paths = [os.path.expanduser("~/Desktop"), os.path.expanduser("~/Downloads")]
         for path in paths:
             output = self.run_scan("-m", path)
             for line in output:
                 self.output_textbox_yararules.insert("end", line + "\n")
             self.insert_clean_files(path, output)
+
+        self.output_textbox_virus.delete("1.0", "end")
+        self.output_textbox_virus.insert("end", str(self.number_of_viruses("Linux")))
+
+        self.output_textbox_files.delete("1.0", "end")
+        self.output_textbox_files.insert("end", str((self.count_files(os.path.expanduser("~/Desktop/python")) + self.count_files(os.path.expanduser("~/Downloads"))) - self.number_of_viruses("Linux")))
 
     def extension_check(self):
         path = self.entry_path.get()
@@ -180,17 +193,37 @@ class HideNSeek(ctk.CTk):
             if linie not in l:
                 l.append(linie)
         self.output_textbox_yararules.delete("1.0", "end")
+
         for linie in l:
             self.output_textbox_yararules.insert("end", linie + "\n")
-        self.insert_clean_files(path, l)
 
-    def delete_content(self):
-        path = self.delete.get()
-        messagebox.showinfo("INFO", "Scanning is starting")
-        if os.path.isdir(path):
-            os.system("rm -rf '" + path + "'")
-        else:
-            os.system("rm '" + path + "'")
+        self.insert_clean_files(path, l)
+        messagebox.showinfo("INFO", "Succes!")
+
+        self.output_textbox_virus.delete("1.0", "end")
+        self.output_textbox_virus.insert("end", str(self.number_of_viruses("has")))
+
+        self.output_textbox_files.delete("1.0", "end")
+        self.output_textbox_files.insert("end", str(self.count_files(path) - self.number_of_viruses("has")))
+
+    def start_scan(self):
+        path = self.entry_path.get()
+        output = self.run_scan("-m", path)
+        self.output_textbox_yararules.delete("1.0", "end")
+
+        for line in output:
+            self.output_textbox_yararules.insert("end", line + "\n")
+
+        self.output_textbox_virus.delete("1.0", "end")
+        self.output_textbox_virus.insert("end", str(self.number_of_viruses("Linux")))
+
+        self.output_textbox_files.delete("1.0", "end")
+        self.output_textbox_files.insert("end", str(self.count_files(path) - self.number_of_viruses("Linux")))
+
+        self.insert_clean_files(path, output)
+
+        messagebox.showinfo("INFO", "Success!")
+
 
 if __name__ == "__main__":
     app = HideNSeek()

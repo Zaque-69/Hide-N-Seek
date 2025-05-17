@@ -19,9 +19,6 @@ proc main() =
         of "-m" :
             runShellCommand(fmt"cd src && nim c -r malware.nim {paramStr(2)} && cd ..")
 
-        of "-p" : 
-            runShellCommand("")
-
         of "-c" : 
             compileAll("src", "nim")
             compileAll("src/rules", "yara")

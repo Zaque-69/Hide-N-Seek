@@ -9,6 +9,8 @@ pkgs.mkShell{
     python313
     python313Packages.tkinter
     python313Packages.customtkinter
+    python313Packages.pillow
+    python313Packages.pip
   ];
 
   shellHook = ''
