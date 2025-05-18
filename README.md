@@ -2,7 +2,7 @@
   <img width="800" alt="webui" src="assets/logo.png">
 </p>
 
-This **Web Scraper GUI Application** provides an intuitive and user-friendly interface for scraping web pages, extracting data, and managing scraped content. The application is built using **Python**, with a focus on modularity and efficiency, utilizing libraries such as **BeautifulSoup**, **requests**, and **customtkinter**.
+This project is a lightweight antivirus application for Linux, built using Nim (for core scanning logic), Python (for the graphical user interface), and YARA (for malware signature detection). It was designed to demonstrate how modern threats can be analyzed and identified using fast and flexible tooling, without relying on bloated antivirus engines.
 
 ### Features
 
