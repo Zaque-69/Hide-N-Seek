@@ -1,6 +1,3 @@
-
-# Hide 'N Seek
-
 <p align = "left">
   <img width="800" alt="webui" src="assets/logo.png">
 </p>
