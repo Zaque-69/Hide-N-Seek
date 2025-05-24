@@ -46,30 +46,11 @@ rule Linux_gafgyt_trojan_3dcad97c {
         and all of them
 }
 
-rule Linux_gafgyt_trojan_7d137848 {
-    meta : 
-        creation_date = "04/02/2025"
-        update_date = "04/04/2025"
-        github = "https://github.com/Zaque-69"
-        fingerprint = "A3B57138D2D8FBD64586575CD4A0ECB94BA5FDA3E3A3B9D0A4EA08D417106221"
-        sample = ""
-        os = "Linux"
-	
-    strings : 
-
-        // /x38/xFJ/x93/xID/x9A
-        $b1 = { 2F 78 33 38 2F 78 46 4A 2F 78 39 33 2F 78 49 44 2F 78 39 41 }
-
-    condition : 
-	    all of them
-}
-
 rule Linux_gafgyt_trojan_1fbfb250 {
     meta : 
         creation_date = "04/02/2025"
-        update_date = "04/04/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "C34224482EDD410D7E41ED5590FA7D2BA663282260F9DA17A88ACAC1283BE1E6"
+        fingerprint = "86DA5C78C8FA02422FCEBC40544C502907A42F941FFFA01F9BBCB09DABCC4F82"
         sample = "https://github.com/MalwareSamples/Linux-Malware-Samples/blob/main/1fbfb2501ebe6e653d5e1e53b19f49eabbb34ed350615140097704539faacd0b"
         os = "Linux"
 	
@@ -80,4 +61,81 @@ rule Linux_gafgyt_trojan_1fbfb250 {
 
     condition : 
 	    all of them
+}
+
+rule Linux_gafgyt_trojan_Yakuza_FBI {
+    meta : 
+        creation_date = "23/05/2025"
+        github = "https://github.com/Zaque-69"
+        fingerprint = "113EEA29299559485E88C8DEA0241B843931729ED93D211E8AEE21922501924E"
+        sample = "https://bazaar.abuse.ch/download/dc4344e3b495c0edf428772b93de873ad7d714a139d53efb277f0aa4a82be3eb"
+        os = "Linux"
+	
+    strings : 
+
+        // nameserver 8.8.4.4
+        $b1 = { 6E 61 6D 65 73 65 72 76 65 72 20 38 2E 38 2E 34 2E 34 }
+
+        // RSTFINACKPSH
+        $b2 = { 52 53 54 00 46 49 4E 00 41 43 4B 00 50 53 48 }
+
+        // 4E/x31/x6B/x4B
+        $b3 = { 34 45 2F 78 33 31 2F 78 36 42 2F 78 34 42 }
+
+        // chk_captcha
+        $b4 = { 63 68 6B 5F 63 61 70 74 63 68 61 }
+
+        // TLSBLACKNURSE
+        $b5 = { 54 4C 53 00 42 4C 41 43 4B 4E 55 52 53 45 }
+
+        // ICMP SCANNER
+        $b6 = { 49 43 4D 50 00 53 43 41 4E 4E 45 52 }
+
+        // ON OFF CHOOPA
+        $b7 = { 4F 4E 00 4F 46 46 00 43 48 4F 4F 50 41 }
+
+        // Wrong medium
+        $b8 = { 57 72 6F 6E 67 20 6D 65 64 69 75 6D }
+
+        // OVHRAW JUNK
+        $b9 = { 4F 56 48 52 41 57 00 4A 55 4E 4B }
+
+        // UDPRAW SHIT
+        $b10 = { 55 44 50 52 41 57 00 53 48 49 54 }
+
+        // GAME-KILLER XMAS
+        $b11 = { 47 41 4D 45 2D 4B 49 4C 4C 45 52 00 58 4D 41 53 }
+
+        // Killed %d
+        $b12 = { 4B 69 6C 6C 65 64 20 25 64 }
+
+        // www.thesubot
+        $b13 = { 77 77 77 2E 74 68 65 73 75 62 6F 74 }
+
+        // www.billybobbot.com/crawler
+        $b14 = { 77 77 77 2E 62 69 6C 6C 79 62 6F 62 62 6F 74 2E 63 6F 6D 2F 63 72 61 77 6C 65 72 }
+
+        // Rep Fucking NeTiS
+        $b15 = { 52 65 70 20 46 75 63 6B 69 6E 67 20 4E 65 54 69 53 }
+
+        // Thisity 0n 
+        $b16 = { 54 68 69 73 69 74 79 20 30 6E }
+
+        // Ur FuCkInG FoReHeAd
+        $b17 = { 55 72 20 46 75 43 6B 49 6E 47 20 46 6F 52 65 48 65 41 64 }
+
+        // We BiG L33T HaxErS
+        $b18 = { 57 65 20 42 69 47 20 4C 33 33 54 20 48 61 78 45 72 53 }
+
+		// YakuzaBotnet
+        $m1 = { 59 61 6B 75 7A 61 42 6F 74 6E 65 74 }
+		
+        // Scarface1337Self
+        $m2 = { 53 63 61 72 66 61 63 65 31 33 33 37 53 65 6C 66 }
+
+    condition : 
+	    all of ( $m* )
+		and 12 of ( $b* )
+		and filesize > 50KB
+		and filesize < 150KB
 }

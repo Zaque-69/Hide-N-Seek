@@ -1,9 +1,9 @@
-rule Linux_prometei_abuse_ch {
+rule Linux_prometei_trojan_abuse_ch {
     meta : 
 		creation_date = "10/05/2025"
-        update_date = "11/05/2025"
+        update_date = "23/05/2025"
         github = "https://github.com/Zaque-69"
-        fingerprint = "EB73A0E570F8DAC0CA978C9977D8B820D2D70DEFD1F1C517F6038B303E4C045D"
+        fingerprint = "30627C2147AEF5D2A5DC30519DE3DB583B9DEA29C2859C257806B02834707815"
         sample = "https://bazaar.abuse.ch/user/1/"
         os = "Linux"
 
