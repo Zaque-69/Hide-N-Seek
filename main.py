@@ -13,7 +13,7 @@ TEXT_WHITE = "#F4F2E6"
 TEXTBOX_COLOR = "#1D1F1E"
 HOVER_TEXTBOX_COLOR = "#151515"
 BORDER_BUTTON_COLOR = "#363837"
-VIBRANT_RED = "#137ED0"
+VIBRANT_YELLOW = "#E4C44C"
 
 class HideNSeek(ctk.CTk):
     def __init__(self):
@@ -30,9 +30,6 @@ class HideNSeek(ctk.CTk):
         self.label_titlu = ctk.CTkLabel(self, text = "Hide 'N Seek", font = ctk.CTkFont(size = 20, weight = "bold"))
         self.label_titlu.place(x = 30, y = 20)
 
-        self.name = ctk.CTkLabel(self, text = "Zamfir Andrei Constantin\n Colegiul National Nichita Stanescu\nclasa a 11a - sectiune Utilitar\n\ngithub.com/Zaque-69/Hide-N-Seek", font = ctk.CTkFont(size = 8, weight = "bold"))
-        self.name.place(x = 730, y = 450)
-
         self.frame_input = ctk.CTkFrame(self)
         self.frame_input.place(x = 30, y = 60)
 
@@ -42,7 +39,7 @@ class HideNSeek(ctk.CTk):
         self.entry_path = ctk.CTkEntry(self.frame_input, width = 400, placeholder_text = "Ex: /home/user/Downloads")
         self.entry_path.pack()
 
-        self.output_textbox_yararules = ctk.CTkTextbox(self, width = 660, height = 150, text_color = VIBRANT_RED)
+        self.output_textbox_yararules = ctk.CTkTextbox(self, width = 660, height = 150, text_color = VIBRANT_YELLOW)
         self.output_textbox_yararules.place(x = 30, y = 140)
 
         self.output_textbox_scannedfiles = ctk.CTkTextbox(self, width = 660, height = 150)
@@ -51,7 +48,7 @@ class HideNSeek(ctk.CTk):
         self.output_textbox_files = ctk.CTkTextbox(self, width = 55, height = 30, text_color = TEXT_WHITE)
         self.output_textbox_files.place(x = 577, y = 95)
 
-        self.output_textbox_virus = ctk.CTkTextbox(self, width = 55, height = 30, text_color = VIBRANT_RED)
+        self.output_textbox_virus = ctk.CTkTextbox(self, width = 55, height = 30, text_color = VIBRANT_YELLOW)
         self.output_textbox_virus.place(x = 640, y = 95)
 
         self.button_verifica = ctk.CTkButton(self, text = "SCAN", width = 120, command = self.start_scan,
@@ -74,13 +71,13 @@ class HideNSeek(ctk.CTk):
         self.qs_button = ctk.CTkButton(self, width = 130, height = 160, image = quick_img, text = "", command = self.quick_scan,
             fg_color = TEXTBOX_COLOR, border_width = 2, border_color = BORDER_BUTTON_COLOR,
             hover_color = HOVER_TEXTBOX_COLOR, corner_radius = 4)
-        self.qs_button.place(x = 740, y = 80)
+        self.qs_button.place(x = 740, y = 100)
 
         ext_img = CTkImage(dark_image = Image.open("./assets/file.png"), size = (100, 100))
         self.ext_button = ctk.CTkButton(self, width = 130, height = 160, image = ext_img, text = "", command = self.extension_check,
             fg_color = TEXTBOX_COLOR, border_width = 2, border_color = BORDER_BUTTON_COLOR,
             hover_color = HOVER_TEXTBOX_COLOR, corner_radius = 4)
-        self.ext_button.place(x = 740, y = 260)
+        self.ext_button.place(x = 740, y = 280)
 
         trash_img = CTkImage(dark_image = Image.open("./assets/trash.png"), size = (25, 25))
         self.trash_button = ctk.CTkButton(self, width = 35, height = 35, image = trash_img, text = "", command = self.delete_content,
